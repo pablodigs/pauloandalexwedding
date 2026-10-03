@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paulo & Alex</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- HERO -->
+
+    <header class="hero">
+
+        <div class="hero-overlay"></div>
+<!-- 
+        <img src="images/monogram-black.png"
+             alt="Wedding Monogram"
+             class="hero-monogram"> -->
+
+        <h1>Paulo & Alex</h1>
+
+        <p class="hero-subtitle">
+            ARE GETTING MARRIED
+        </p>
+
+        <p class="hero-date">
+            October 2026
+        </p>
+
+        <a href="#attendance" class="scroll-button">
+            VIEW DETAILS
+        </a>
+
+    </header>
+
+    <!-- CEREMONY & RECEPTION -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <h2>Ceremony & Reception</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="card">
+
+            <h3>Ceremony</h3>
+
+            <p>
+                Ceremony Venue Name
+            </p>
+
+            <p>
+                Ceremony Address
+            </p>
+
+            <p>
+                2:00 PM
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Reception</h3>
+
+            <p>
+                Reception Venue Name
+            </p>
+
+            <p>
+                Reception Address
+            </p>
+
+            <p>
+                5:00 PM
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- ADVENTURES & PHOTOGRAPHS -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <h2>Adventures & Photographs</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="gallery">
+
+            <img src="images/gallery/gallery1.jpg" alt="">
+            <img src="images/gallery/gallery2.jpg" alt="">
+            <img src="images/gallery/gallery3.jpg" alt="">
+            <img src="images/gallery/gallery4.jpg" alt="">
+            <img src="images/gallery/gallery5.jpg" alt="">
+            <img src="images/gallery/gallery6.jpg" alt="">
+            <img src="images/gallery/gallery7.jpg" alt="">
+            <img src="images/gallery/gallery8.jpg" alt="">
+            <img src="images/gallery/gallery9.jpg" alt="">
+            <img src="images/gallery/gallery10.jpg" alt="">
+            <img src="images/gallery/gallery11.jpg" alt="">
+            <img src="images/gallery/gallery12.jpg" alt="">
+            <img src="images/gallery/gallery13.jpg" alt="">
+            <img src="images/gallery/gallery14.jpg" alt="">
+            <img src="images/gallery/gallery15.jpg" alt="">
+
+        </div>
+
+    </section>
+
+    <!-- ATTIRE & PALETTE -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <h2>Attire & Palette</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="card">
+
+            <p>
+                Formal Attire
+            </p>
+
+            <p>
+                Kindly wear colors from our wedding palette.
+            </p>
+
+            <div class="palette">
+
+                <div class="color sage"></div>
+                <div class="color olive"></div>
+                <div class="color brown"></div>
+                <div class="color beige"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- QUESTIONS & ANSWERS -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <h2>Questions & Answers</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="faq">
+
+            <div class="faq-item">
+                <h4>When should I RSVP by?</h4>
+                <p>
+                    Please respond by October 31, 2026.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h4>Can I bring a plus-one?</h4>
+                <p>
+                    Only guests already included in the reservation may attend.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h4>Can I bring children?</h4>
+                <p>
+                    Due to limited seating capacity, our celebration will be an adults-only event.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h4>What should I wear?</h4>
+                <p>
+                    Formal attire following our Attire & Palette guide.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h4>Is parking available?</h4>
+                <p>
+                    Parking is available at both venues, though spaces may be limited.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+        <!-- ATTENDANCE & PARTY -->
+
+    <section id="attendance" class="section">
+
+        <div class="section-header">
+            <h2>Attendance & Party</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="card">
+
+            <h3>Find Your Invitation</h3>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search by name">
+
+            <button id="searchButton">
+                Search
+            </button>
+
+        </div>
+
+        <!-- RESERVATION CARD -->
+
+        <div id="reservationCard" class="card hidden">
+
+            <h3>Your Reservation</h3>
+
+            <p id="guestName"></p>
+
+            <p id="seatCount"></p>
+
+            <p id="rsvpStatus"></p>
+
+        </div>
+
+        <!-- PARTY CARD -->
+
+        <div id="partyCard" class="card hidden">
+
+            <h3>Your Party</h3>
+
+            <p id="partyInstructions"></p>
+
+            <!-- Guest 2 -->
+
+            <div class="guest-row">
+
+                <span id="guest2Text"></span>
+
+                <button
+                    id="removeGuest2"
+                    class="remove-btn">
+                    Remove
+                </button>
+
+            </div>
+
+            <input
+                id="guest1Input"
+                type="text"
+                placeholder="Guest #2 Name">
+
+            <!-- Guest 3 -->
+
+            <div class="guest-row">
+
+                <span id="guest3Text"></span>
+
+                <button
+                    id="removeGuest3"
+                    class="remove-btn">
+                    Remove
+                </button>
+
+            </div>
+
+            <input
+                id="guest2Input"
+                type="text"
+                placeholder="Guest #3 Name">
+
+        </div>
+
+        <!-- EMAIL -->
+
+        <div id="emailCard" class="card hidden">
+
+            <h3>Email Address</h3>
+
+            <p class="small-text">
+                We'll use this to send important wedding updates and reminders.
+            </p>
+
+            <input
+                type="email"
+                id="emailInput"
+                placeholder="your@email.com">
+
+            <p id="rsvpError"></p>
+
+        </div>
+
+        <!-- ACTIONS -->
+
+        <div id="actionButtons" class="action-buttons hidden">
+
+            <button id="confirmButton" class="primary-btn">
+                YES, I'LL BE THERE
+            </button>
+
+            <button id="declineButton" class="secondary-btn">
+                I CAN'T MAKE IT
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <img
+            src="images/monogram-black.png"
+            alt="Wedding Monogram"
+            class="footer-monogram">
+
+        <p>
+            With love,
+        </p>
+
+        <h3>
+            Paulo & Alex
+        </h3>
+
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>
