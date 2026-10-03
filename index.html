@@ -10,9 +10,34 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pinyon+Script&display=swap" rel="stylesheet">
 </head>
 
 <body>
+    <div id="passwordGate">
+        <div class="password-box">
+
+            <h2>Alex & Paulo</h2>
+
+            <p>Please enter the access code from your invitation.</p>
+
+            <input
+                type="password"
+                id="passwordInput"
+                placeholder="Access Code">
+
+            <button class="primary-btn" id="passwordButton">
+                Enter
+            </button>
+
+            <p id="passwordError"></p>
+
+        </div>
+    </div>
 
     <!-- HERO -->
 
@@ -49,8 +74,8 @@
     <section class="section">
 
         <div class="section-header">
-            <h2>Aisle & Program</h2>
-            <div class="section-line"></div>
+            <h2><span id="anp">A</span>isle <span id="anp">& P</span>rogram</h2>
+            <div class="section-line"></div> 
         </div>
 
         <!-- CEREMONY -->
@@ -226,7 +251,7 @@
     <section class="section">
 
         <div class="section-header">
-            <h2>Archives & Portraits</h2>
+            <h2><span id="anp">A</span>rchives <span id="anp">& P</span>ortraits</h2>
             <div class="section-line"></div>
         </div>
 
@@ -265,7 +290,7 @@
     <section class="section">
 
         <div class="section-header">
-            <h2>Attire & Palette</h2>
+            <h2><span id="anp">A</span>ttire <span id="anp">& P</span>alette</h2>
             <div class="section-line"></div>
         </div>
 
@@ -297,7 +322,7 @@
     <section class="section">
 
         <div class="section-header">
-            <h2>Answers & Preparations</h2>
+            <h2><span id="anp">A</span>nswers <span id="anp">& P</span>reparations</h2>
             <div class="section-line"></div>
         </div>
 
@@ -356,18 +381,32 @@
 
     </section>
 
+
     <!-- ATTENDANCE & PARTY -->
 
-    <section id="attendance" class="section">
+    <section id="attendance" class="section rsvp-section">
 
         <div class="section-header">
-            <h2>Attendance & Party</h2>
+            <h2><span id="anp">A</span>ttendance <span id="anp">& P</span>arty</h2>
             <div class="section-line"></div>
+
+            <p class="section-intro">
+                Your presence would mean so much to us.
+                Kindly let us know if you'll be celebrating with us.
+            </p>
         </div>
 
-        <div class="card">
+        <!-- STEP 1 -->
+
+        <div class="card rsvp-card">
+
+            <div class="step-number">01</div>
 
             <h3>Find Your Invitation</h3>
+
+            <p class="step-description">
+                Enter your name exactly as it appears on your invitation.
+            </p>
 
             <input
                 type="text"
@@ -382,7 +421,9 @@
 
         <!-- RESERVATION CARD -->
 
-        <div id="reservationCard" class="card hidden">
+        <div id="reservationCard" class="card rsvp-card hidden">
+
+            <div class="step-number">02</div>
 
             <h3>Your Reservation</h3>
 
@@ -398,13 +439,13 @@
 
         <!-- PARTY CARD -->
 
-        <div id="partyCard" class="card hidden">
+        <div id="partyCard" class="card rsvp-card hidden">
+
+            <div class="step-number">03</div>
 
             <h3>Your Party</h3>
 
             <p id="partyInstructions"></p>
-
-            <!-- Guest 2 -->
 
             <div class="guest-row">
 
@@ -422,8 +463,6 @@
                 id="guest1Input"
                 type="text"
                 placeholder="Guest #2 Name">
-
-            <!-- Guest 3 -->
 
             <div class="guest-row">
 
@@ -446,12 +485,14 @@
 
         <!-- EMAIL -->
 
-        <div id="emailCard" class="card hidden">
+        <div id="emailCard" class="card rsvp-card hidden">
 
-            <h3>Email Address</h3>
+            <div class="step-number">04</div>
+
+            <h3>Email Address<span style="color: red;">*</span></h3>
 
             <p class="small-text">
-                We'll use this to send important wedding updates and reminders.
+                We'd love to keep you updated with important details as the day approaches.
             </p>
 
             <input
@@ -483,7 +524,7 @@
 
     <footer>
 
-        <img
+        <!-- <img
             src="images/monogram-black.png"
             alt="Wedding Monogram"
             class="footer-monogram">
@@ -494,7 +535,10 @@
 
         <h3>
             Alex & Paulo
-        </h3>
+        </h3> -->
+        <p>
+            © Alex & Paulo 2026
+        </p>
 
     </footer>
 
@@ -512,17 +556,17 @@
             <div class="modal-actions">
 
                 <button
-                    id="cancelRemoveGuest"
-                    class="modal-cancel-btn"
-                >
-                    Cancel
-                </button>
-
-                <button
                     id="confirmRemoveGuest"
                     class="modal-remove-btn"
                 >
                     Remove Guest
+                </button>
+
+                <button
+                    id="cancelRemoveGuest"
+                    class="modal-cancel-btn"
+                >
+                    Cancel
                 </button>
 
             </div>

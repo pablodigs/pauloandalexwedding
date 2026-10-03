@@ -1,3 +1,35 @@
+// =========================
+// PASSWORD PROTECT
+// =========================
+
+const SITE_PASSWORD = "pablodigs";
+
+const passwordButton =
+    document.getElementById("passwordButton");
+
+const passwordInput =
+    document.getElementById("passwordInput");
+
+const passwordError =
+    document.getElementById("passwordError");
+
+passwordButton.addEventListener("click", () => {
+
+    const entered =
+        passwordInput.value.trim();
+
+    if (entered === SITE_PASSWORD) {
+
+        document
+            .getElementById("passwordGate")
+            .style.display = "none";
+
+    } else {
+
+        passwordError.textContent =
+            "Incorrect access code.";
+    }
+});
 
 //    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhodGNzemF0bmZtbnFqdHJqd2hoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMzE0MjUsImV4cCI6MjEwNjYwNzQyNX0.SiNVD3vDqt5sf_folcO1SKp9Hy46NMAIXI3fBT-Z0Kk";
 
@@ -444,7 +476,8 @@ searchButton.addEventListener(
                 "ATTENDANCE CONFIRMED ✓";
 
             show(rsvpStatus);
-
+            hide(removeGuest2);
+            hide(removeGuest3);
             updateConfirmedSeatDisplay();
 
         } else if (
@@ -458,6 +491,8 @@ searchButton.addEventListener(
             show(rsvpStatus);
 
             hide(seatCount);
+            hide(removeGuest2);
+            hide(removeGuest3);
 
         } else {
 
@@ -520,6 +555,8 @@ searchButton.addEventListener(
                 show(partyCard);
 
                 hide(partyInstructions);
+                hide(removeGuest2);
+                hide(removeGuest3);
 
                 // =========================
                 // GUEST #2
@@ -535,12 +572,10 @@ searchButton.addEventListener(
                         guest.guest2;
 
                     show(guest2Text);
-                    show(removeGuest2);
 
                 } else {
 
                     hide(guest2Text);
-                    hide(removeGuest2);
                 }
 
                 // =========================
@@ -557,12 +592,10 @@ searchButton.addEventListener(
                         guest.guest3;
 
                     show(guest3Text);
-                    show(removeGuest3);
 
                 } else {
 
                     hide(guest3Text);
-                    hide(removeGuest3);
                 }
 
                 // No input boxes after
@@ -1281,3 +1314,38 @@ confirmRemoveGuest.addEventListener(
         }
     }
 );
+
+// =========================
+// EVENT LISTENERS - PRESS ENTER
+// =========================
+
+[
+    emailInput,
+    guest1Input,
+    guest2Input
+].forEach(input => {
+
+    input.addEventListener("keydown", event => {
+
+        if (event.key === "Enter") {
+
+            confirmButton.click();
+        }
+    });
+});
+
+searchInput.addEventListener("keydown", event => {
+
+    if (event.key === "Enter") {
+
+        searchButton.click();
+    }
+});
+
+passwordInput.addEventListener("keydown", event => {
+
+    if (event.key === "Enter") {
+
+        passwordButton.click();
+    }
+});
