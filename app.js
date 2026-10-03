@@ -1,3 +1,6 @@
+
+//    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhodGNzemF0bmZtbnFqdHJqd2hoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMzE0MjUsImV4cCI6MjEwNjYwNzQyNX0.SiNVD3vDqt5sf_folcO1SKp9Hy46NMAIXI3fBT-Z0Kk";
+
 // =========================
 // SUPABASE
 // =========================
@@ -19,22 +22,38 @@ const supabaseClient =
 // =========================
 
 let currentGuest = null;
-let searchText = "";
+let guestToRemove = null;
 
 // =========================
 // ELEMENTS
 // =========================
 
-const searchInput = document.getElementById("searchInput");
-const searchButton = document.getElementById("searchButton");
+const searchInput =
+    document.getElementById("searchInput");
 
-const reservationCard = document.getElementById("reservationCard");
-const partyCard = document.getElementById("partyCard");
-const emailCard = document.getElementById("emailCard");
+const searchButton =
+    document.getElementById("searchButton");
 
-const guestName = document.getElementById("guestName");
-const seatCount = document.getElementById("seatCount");
-const rsvpStatus = document.getElementById("rsvpStatus");
+const reservationCard =
+    document.getElementById("reservationCard");
+
+const partyCard =
+    document.getElementById("partyCard");
+
+const emailCard =
+    document.getElementById("emailCard");
+
+const guestName =
+    document.getElementById("guestName");
+
+const guest1Text =
+    document.getElementById("guest1Text");
+
+const seatCount =
+    document.getElementById("seatCount");
+
+const rsvpStatus =
+    document.getElementById("rsvpStatus");
 
 const partyInstructions =
     document.getElementById("partyInstructions");
@@ -72,24 +91,42 @@ const removeGuest2 =
 const removeGuest3 =
     document.getElementById("removeGuest3");
 
+const removeGuestModal =
+    document.getElementById("removeGuestModal");
+
+const removeGuestMessage =
+    document.getElementById("removeGuestMessage");
+
+const cancelRemoveGuest =
+    document.getElementById("cancelRemoveGuest");
+
+const confirmRemoveGuest =
+    document.getElementById("confirmRemoveGuest");
+
 // =========================
 // HELPERS
 // =========================
 
 function show(el) {
-    el.classList.remove("hidden");
+    if (el) {
+        el.classList.remove("hidden");
+    }
 }
 
 function hide(el) {
-    el.classList.add("hidden");
+    if (el) {
+        el.classList.add("hidden");
+    }
 }
 
 function capitalizeWords(str) {
-
-    if (!str) return "";
+    if (!str) {
+        return "";
+    }
 
     return str
-        .split(" ")
+        .trim()
+        .split(/\s+/)
         .map(word =>
             word.charAt(0).toUpperCase() +
             word.slice(1).toLowerCase()
@@ -97,38 +134,165 @@ function capitalizeWords(str) {
         .join(" ");
 }
 
-function clearUI() {
+function openRemoveGuestModal(guestNumber) {
+
+    guestToRemove = guestNumber;
+
+    let guestNameToRemove = "";
+
+    if (
+        guestNumber === 2 &&
+        currentGuest &&
+        currentGuest.guest2
+    ) {
+        guestNameToRemove =
+            currentGuest.guest2;
+    }
+
+    if (
+        guestNumber === 3 &&
+        currentGuest &&
+        currentGuest.guest3
+    ) {
+        guestNameToRemove =
+            currentGuest.guest3;
+    }
+
+    removeGuestMessage.textContent =
+        `Are you sure you want to remove ${guestNameToRemove} from your confirmed party?`;
+
+    show(removeGuestModal);
+}
+
+function closeRemoveGuestModal() {
+
+    hide(removeGuestModal);
+
+    guestToRemove = null;
+}
+
+// =========================
+// DISPLAY CONFIRMED SEATS
+// =========================
+
+function updateConfirmedSeatDisplay() {
+
+    if (!currentGuest) {
+        return;
+    }
+
+    const confirmedSeats =
+        Number(currentGuest.seats) || 1;
+
+    if (confirmedSeats === 1) {
+
+        seatCount.textContent =
+            "1 SEAT CONFIRMED";
+
+    } else {
+
+        seatCount.textContent =
+            `${confirmedSeats} SEATS CONFIRMED`;
+    }
+
+    show(seatCount);
+}
+
+// =========================
+// INITIAL UI
+// =========================
+
+function hideReservationSection() {
 
     hide(reservationCard);
-    hide(partyCard);
-    hide(emailCard);
-    hide(actionButtons);
 
-    rsvpError.textContent = "";
+    guestName.textContent = "";
+    guest1Text.textContent = "";
+    seatCount.textContent = "";
+    rsvpStatus.textContent = "";
+}
+
+function hidePartySection() {
+
+    hide(partyCard);
+
+    partyInstructions.textContent = "";
+
+    guest2Text.textContent = "";
+    guest3Text.textContent = "";
 
     guest1Input.value = "";
     guest2Input.value = "";
 
-    guest2Text.textContent = "";
-    guest3Text.textContent = "";
+    hide(guest2Text);
+    hide(guest3Text);
+
+    hide(removeGuest2);
+    hide(removeGuest3);
+
+    hide(guest1Input);
+    hide(guest2Input);
 }
 
+function hideEmailSection() {
+
+    hide(emailCard);
+
+    emailInput.value = "";
+}
+
+function hideActionButtons() {
+
+    hide(actionButtons);
+    hide(confirmButton);
+    hide(declineButton);
+}
+
+function resetUI() {
+
+    hideReservationSection();
+    hidePartySection();
+    hideEmailSection();
+    hideActionButtons();
+
+    rsvpError.textContent = "";
+
+    currentGuest = null;
+}
+
+resetUI();
+
 // =========================
-// SEARCH
+// SEARCH BUTTON
 // =========================
 
 searchButton.addEventListener(
     "click",
     async () => {
 
-        searchText =
+        rsvpError.textContent = "";
+
+        const searchText =
             searchInput.value
                 .trim()
                 .toLowerCase();
 
-        if (!searchText) return;
+        if (!searchText) {
+            return;
+        }
 
-        clearUI();
+        hidePartySection();
+        hideEmailSection();
+        hideActionButtons();
+
+        guest1Input.value = "";
+        guest2Input.value = "";
+
+        rsvpError.textContent = "";
+
+        // =========================
+        // GET GUESTS
+        // =========================
 
         const { data, error } =
             await supabaseClient
@@ -136,273 +300,399 @@ searchButton.addEventListener(
                 .select("*");
 
         if (error) {
-
             alert(error.message);
             return;
         }
 
         let guest = null;
 
+        // =========================
+        // SEARCH
+        // =========================
+
         data.some(item => {
 
             const firstLast =
                 `${item.firstName || ""} ${item.lastName || ""}`
-                .trim()
-                .toLowerCase();
+                    .trim()
+                    .toLowerCase();
 
             const nickLast =
-                `${item.nickname || ""} ${item.lastName || ""}`
-                .trim()
-                .toLowerCase();
+                `${item.nickName || ""} ${item.lastName || ""}`
+                    .trim()
+                    .toLowerCase();
 
-            const g2 =
+            const guest2 =
                 (item.guest2 || "")
-                .trim()
-                .toLowerCase();
+                    .trim()
+                    .toLowerCase();
 
-            const g3 =
+            const guest3 =
                 (item.guest3 || "")
-                .trim()
-                .toLowerCase();
+                    .trim()
+                    .toLowerCase();
 
             if (
                 searchText === firstLast ||
                 searchText === nickLast ||
-                searchText === g2 ||
-                searchText === g3
+                searchText === guest2 ||
+                searchText === guest3
             ) {
 
                 guest = item;
+
                 return true;
             }
 
             return false;
         });
 
+        // =========================
+        // GUEST NOT FOUND
+        // =========================
+
         if (!guest) {
+
+            currentGuest = null;
+
+            hidePartySection();
+            hideEmailSection();
+            hideActionButtons();
 
             show(reservationCard);
 
             guestName.textContent =
                 "Invitation Not Found";
 
-            seatCount.textContent = "";
+            guest1Text.textContent =
+                "Please double-check the spelling of your name and try again. You may also search using your nickname and last name.\n\nIf you're still having trouble, please reach out to the couple.";
 
-            rsvpStatus.textContent =
-                "Please check spelling and try again.";
+            show(guestName);
+            show(guest1Text);
+
+            hide(seatCount);
+            hide(rsvpStatus);
 
             return;
         }
 
         currentGuest = guest;
 
-        renderGuest();
-    }
-);
+        // =========================
+        // RESERVATION
+        // =========================
 
-// =========================
-// RENDER
-// =========================
+        show(reservationCard);
 
-function renderGuest() {
+        const primaryGuestName =
+            `${guest.firstName || ""} ${guest.lastName || ""}`
+                .trim();
 
-    show(reservationCard);
+        guestName.textContent =
+            primaryGuestName;
 
-    guestName.textContent =
-        currentGuest.title;
+        show(guestName);
 
-    seatCount.textContent =
-        currentGuest.seats === 1
-            ? "1 SEAT RESERVED"
-            : `${currentGuest.seats} SEATS RESERVED`;
+        // =========================
+        // PRIMARY / INCLUDED GUEST
+        // =========================
 
-    if (
-        currentGuest.rsvpStatus ===
-        "Attending"
-    ) {
+        const searchedGuest2 =
+            (guest.guest2 || "")
+                .trim()
+                .toLowerCase();
 
-        rsvpStatus.textContent =
-            "ATTENDANCE CONFIRMED ✓";
-
-    } else if (
-        currentGuest.rsvpStatus ===
-        "Not Attending"
-    ) {
-
-        rsvpStatus.textContent =
-            "UNABLE TO ATTEND";
-
-    } else {
-
-        rsvpStatus.textContent =
-            "AWAITING RESPONSE";
-    }
-
-    if (
-        currentGuest.rsvpStatus ===
-        "Attending"
-    ) {
-
-        renderParty();
-
-        return;
-    }
-
-    show(emailCard);
-    show(actionButtons);
-
-    emailInput.value =
-        currentGuest.email || "";
-
-    renderParty();
-}
-
-function renderParty() {
-
-    if (
-        currentGuest.seats < 2
-    ) {
-
-        hide(partyCard);
-        return;
-    }
-
-    show(partyCard);
-
-    if (
-        currentGuest.seats === 2
-    ) {
-
-        partyInstructions.textContent =
-            "Please confirm the name of the guest included in your reservation.";
-
-    } else {
-
-        partyInstructions.textContent =
-            "Please confirm the name of each guest included in your reservation.";
-    }
-
-    // Guest 2
-
-    if (
-        currentGuest.guest2 &&
-        currentGuest.guest2.trim()
-    ) {
-
-        guest2Text.textContent =
-            `Guest #2: ${currentGuest.guest2}`;
-
-        guest2Text.style.display =
-            "inline";
-
-        removeGuest2.style.display =
-            "inline-block";
-
-        guest1Input.style.display =
-            "none";
-
-    } else {
-
-        guest2Text.textContent = "";
-
-        removeGuest2.style.display =
-            "none";
-
-        guest1Input.style.display =
-            "block";
-    }
-
-    // Guest 3
-
-    if (
-        currentGuest.seats >= 3
-    ) {
+        const searchedGuest3 =
+            (guest.guest3 || "")
+                .trim()
+                .toLowerCase();
 
         if (
-            currentGuest.guest3 &&
-            currentGuest.guest3.trim()
+            searchText === searchedGuest2 ||
+            searchText === searchedGuest3
         ) {
 
-            guest3Text.textContent =
-                `Guest #3: ${currentGuest.guest3}`;
+            guest1Text.textContent =
+                "You are included in this reservation";
 
-            guest3Text.style.display =
-                "inline";
+            show(guest1Text);
 
-            removeGuest3.style.display =
-                "inline-block";
+        } else if (
+            guest.seats === 1
+        ) {
 
-            guest2Input.style.display =
-                "none";
+            hide(guest1Text);
 
         } else {
 
-            guest3Text.textContent = "";
+            guest1Text.textContent =
+                "Primary Guest";
 
-            removeGuest3.style.display =
-                "none";
-
-            guest2Input.style.display =
-                "block";
+            show(guest1Text);
         }
-    }
-}
 
-// =========================
-// REMOVE GUEST #2
-// =========================
+        // =========================
+        // RSVP STATUS
+        // =========================
 
-removeGuest2.addEventListener(
-    "click",
-    async () => {
+        if (
+            guest.rsvpStatus ===
+            "Attending"
+        ) {
 
-        if (!currentGuest) return;
+            rsvpStatus.textContent =
+                "ATTENDANCE CONFIRMED ✓";
 
-        const { error } =
-            await supabaseClient
-                .from("Guests")
-                .update({
-                    guest2: ""
-                })
-                .eq("id", currentGuest.id);
+            show(rsvpStatus);
 
-        if (error) {
-            alert(error.message);
+            updateConfirmedSeatDisplay();
+
+        } else if (
+            guest.rsvpStatus ===
+            "Not Attending"
+        ) {
+
+            rsvpStatus.textContent =
+                "UNABLE TO ATTEND";
+
+            show(rsvpStatus);
+
+            hide(seatCount);
+
+        } else {
+
+            rsvpStatus.textContent =
+                "AWAITING RESPONSE";
+
+            show(rsvpStatus);
+
+            if (
+                guest.seats === 1
+            ) {
+
+                seatCount.textContent =
+                    "1 SEAT RESERVED";
+
+            } else {
+
+                seatCount.textContent =
+                    `${guest.seats} SEATS RESERVED`;
+            }
+
+            show(seatCount);
+        }
+
+        // =========================
+        // NOT ATTENDING
+        // =========================
+
+        if (
+            guest.rsvpStatus ===
+            "Not Attending"
+        ) {
+
+            hideEmailSection();
+            hideActionButtons();
+            hidePartySection();
+
             return;
         }
 
-        currentGuest.guest2 = "";
+        // =========================
+        // ALREADY ATTENDING
+        // =========================
 
-        renderParty();
-    }
-);
+        if (
+            guest.rsvpStatus ===
+            "Attending"
+        ) {
 
-// =========================
-// REMOVE GUEST #3
-// =========================
+            hideEmailSection();
+            hideActionButtons();
 
-removeGuest3.addEventListener(
-    "click",
-    async () => {
+            // Show party card only if
+            // there are additional guests.
+            if (
+                guest.guest2 ||
+                guest.guest3
+            ) {
 
-        if (!currentGuest) return;
+                show(partyCard);
 
-        const { error } =
-            await supabaseClient
-                .from("Guests")
-                .update({
-                    guest3: ""
-                })
-                .eq("id", currentGuest.id);
+                hide(partyInstructions);
 
-        if (error) {
-            alert(error.message);
+                // =========================
+                // GUEST #2
+                // =========================
+
+                if (
+                    guest.guest2 &&
+                    guest.guest2.trim() !== ""
+                ) {
+
+                    guest2Text.textContent =
+                        "Guest #2: " +
+                        guest.guest2;
+
+                    show(guest2Text);
+                    show(removeGuest2);
+
+                } else {
+
+                    hide(guest2Text);
+                    hide(removeGuest2);
+                }
+
+                // =========================
+                // GUEST #3
+                // =========================
+
+                if (
+                    guest.guest3 &&
+                    guest.guest3.trim() !== ""
+                ) {
+
+                    guest3Text.textContent =
+                        "Guest #3: " +
+                        guest.guest3;
+
+                    show(guest3Text);
+                    show(removeGuest3);
+
+                } else {
+
+                    hide(guest3Text);
+                    hide(removeGuest3);
+                }
+
+                // No input boxes after
+                // RSVP has been confirmed.
+                hide(guest1Input);
+                hide(guest2Input);
+
+            } else {
+
+                hidePartySection();
+            }
+
             return;
         }
 
-        currentGuest.guest3 = "";
+        // =========================
+        // AWAITING RESPONSE
+        // =========================
 
-        renderParty();
+        show(emailCard);
+
+        emailInput.value =
+            guest.email || "";
+
+        // =========================
+        // PARTY
+        // =========================
+
+        if (
+            guest.seats >= 2
+        ) {
+
+            show(partyCard);
+
+            if (
+                guest.seats === 2
+            ) {
+
+                partyInstructions.textContent =
+                    "Please confirm the name of the guest to be included in your reservation.";
+
+            } else {
+
+                partyInstructions.textContent =
+                    "Please confirm the name of each guest to be included in your reservation.";
+            }
+
+            show(partyInstructions);
+
+            // =========================
+            // GUEST #2
+            // =========================
+
+            if (
+                guest.guest2 &&
+                guest.guest2.trim() !== ""
+            ) {
+
+                guest2Text.textContent =
+                    "Guest #2: " +
+                    guest.guest2;
+
+                show(guest2Text);
+                show(removeGuest2);
+                hide(guest1Input);
+
+            } else {
+
+                hide(guest2Text);
+                hide(removeGuest2);
+                show(guest1Input);
+            }
+
+            // =========================
+            // GUEST #3
+            // =========================
+
+            if (
+                guest.seats >= 3
+            ) {
+
+                if (
+                    guest.guest3 &&
+                    guest.guest3.trim() !== ""
+                ) {
+
+                    guest3Text.textContent =
+                        "Guest #3: " +
+                        guest.guest3;
+
+                    show(guest3Text);
+                    show(removeGuest3);
+                    hide(guest2Input);
+
+                } else {
+
+                    hide(guest3Text);
+                    hide(removeGuest3);
+                    show(guest2Input);
+                }
+
+            } else {
+
+                hide(guest3Text);
+                hide(removeGuest3);
+                hide(guest2Input);
+            }
+
+        } else {
+
+            hidePartySection();
+        }
+
+        // =========================
+        // RSVP BUTTONS
+        // =========================
+
+        show(actionButtons);
+        show(confirmButton);
+        show(declineButton);
+
+        confirmButton.textContent =
+            "YES, I'll be there";
+
+        confirmButton.disabled = false;
+
+        declineButton.textContent =
+            "I can't make it";
+
+        declineButton.disabled = false;
     }
 );
 
@@ -414,11 +704,19 @@ confirmButton.addEventListener(
     "click",
     async () => {
 
-        if (!currentGuest) return;
+        if (!currentGuest) {
+            return;
+        }
+
+        // =========================
+        // EMAIL REQUIRED
+        // =========================
 
         if (
             !emailInput.value.trim()
         ) {
+
+            emailInput.focus();
 
             rsvpError.textContent =
                 "PLEASE ENTER YOUR EMAIL ADDRESS";
@@ -426,55 +724,231 @@ confirmButton.addEventListener(
             return;
         }
 
-        const updateData = {
+        // =========================
+        // SAVE EMAIL
+        // =========================
 
-            email:
-                emailInput.value.trim(),
+        currentGuest.email =
+            emailInput.value.trim();
 
-            rsvpStatus:
-                "Attending"
-        };
+        currentGuest.rsvpStatus =
+            "Attending";
+
+        // =========================
+        // SAVE GUEST #2
+        // =========================
 
         if (
-            !currentGuest.guest2 &&
-            guest1Input.value.trim()
+            currentGuest.seats >= 2 &&
+            (
+                !currentGuest.guest2 ||
+                currentGuest.guest2.trim() === ""
+            )
         ) {
 
-            updateData.guest2 =
+            currentGuest.guest2 =
                 capitalizeWords(
                     guest1Input.value
-                );
+                ) || "";
+        }
+
+        // =========================
+        // SAVE GUEST #3
+        // =========================
+
+        if (
+            currentGuest.seats >= 3 &&
+            (
+                !currentGuest.guest3 ||
+                currentGuest.guest3.trim() === ""
+            )
+        ) {
+
+            currentGuest.guest3 =
+                capitalizeWords(
+                    guest2Input.value
+                ) || "";
+        }
+
+        // =========================
+        // CALCULATE CONFIRMED SEATS
+        // =========================
+
+        let confirmedSeats = 1;
+
+        if (
+            currentGuest.guest2 &&
+            currentGuest.guest2.trim() !== ""
+        ) {
+
+            confirmedSeats++;
         }
 
         if (
-            !currentGuest.guest3 &&
-            guest2Input.value.trim()
+            currentGuest.guest3 &&
+            currentGuest.guest3.trim() !== ""
         ) {
 
-            updateData.guest3 =
-                capitalizeWords(
-                    guest2Input.value
-                );
+            confirmedSeats++;
         }
+
+        currentGuest.seats =
+            confirmedSeats;
+
+        // =========================
+        // UPDATE SUPABASE
+        // =========================
 
         const { error } =
             await supabaseClient
                 .from("Guests")
-                .update(updateData)
-                .eq("id", currentGuest.id);
+                .update({
+                    email:
+                        currentGuest.email,
+
+                    rsvpStatus:
+                        currentGuest.rsvpStatus,
+
+                    guest2:
+                        currentGuest.guest2,
+
+                    guest3:
+                        currentGuest.guest3,
+
+                    seats:
+                        currentGuest.seats
+                })
+                .eq(
+                    "id",
+                    currentGuest.id
+                );
 
         if (error) {
 
             alert(error.message);
+
             return;
         }
 
-        Object.assign(
-            currentGuest,
-            updateData
-        );
+        // =========================
+        // UPDATE SEAT DISPLAY
+        // =========================
 
-        renderGuest();
+        updateConfirmedSeatDisplay();
+
+        rsvpStatus.textContent =
+            "ATTENDANCE CONFIRMED ✓";
+
+        // =========================
+        // HIDE EMAIL
+        // =========================
+
+        hideEmailSection();
+
+        // =========================
+        // HIDE INSTRUCTIONS
+        // =========================
+
+        hide(partyInstructions);
+
+        // =========================
+        // HIDE INPUTS
+        // =========================
+
+        hide(guest1Input);
+        hide(guest2Input);
+
+        // =========================
+        // GUEST #2 DISPLAY
+        // =========================
+
+        if (
+            currentGuest.guest2 &&
+            currentGuest.guest2.trim() !== ""
+        ) {
+
+            guest2Text.textContent =
+                "Guest #2: " +
+                currentGuest.guest2;
+
+            show(guest2Text);
+
+        } else {
+
+            hide(guest2Text);
+        }
+
+        // =========================
+        // GUEST #3 DISPLAY
+        // =========================
+
+        if (
+            currentGuest.guest3 &&
+            currentGuest.guest3.trim() !== ""
+        ) {
+
+            guest3Text.textContent =
+                "Guest #3: " +
+                currentGuest.guest3;
+
+            show(guest3Text);
+
+        } else {
+
+            hide(guest3Text);
+        }
+
+        // =========================
+        // SHOW REMOVE BUTTONS
+        // =========================
+
+        if (
+            currentGuest.guest2 &&
+            currentGuest.guest2.trim() !== ""
+        ) {
+
+            show(removeGuest2);
+
+        } else {
+
+            hide(removeGuest2);
+        }
+
+        if (
+            currentGuest.guest3 &&
+            currentGuest.guest3.trim() !== ""
+        ) {
+
+            show(removeGuest3);
+
+        } else {
+
+            hide(removeGuest3);
+        }
+
+        // =========================
+        // CONFIRM BUTTON
+        // =========================
+
+        confirmButton.textContent =
+            "Attendance Confirmed ✓";
+
+        confirmButton.disabled = true;
+
+        hide(declineButton);
+        hide(rsvpError);
+
+        // =========================
+        // HIDE PARTY IF ONLY
+        // PRIMARY GUEST REMAINS
+        // =========================
+
+        if (
+            currentGuest.seats === 1
+        ) {
+
+            hidePartySection();
+        }
     }
 );
 
@@ -486,75 +960,324 @@ declineButton.addEventListener(
     "click",
     async () => {
 
-        if (!currentGuest) return;
-
-        if (
-            !emailInput.value.trim()
-        ) {
-
-            rsvpError.textContent =
-                "PLEASE ENTER YOUR EMAIL ADDRESS";
-
+        if (!currentGuest) {
             return;
         }
+
+        const email =
+            emailInput.value.trim();
+
+        /*
+         * EMAIL IS OPTIONAL WHEN DECLINING.
+         *
+         * If the guest entered an email,
+         * we will save it.
+         *
+         * If they leave it blank,
+         * we will simply save the RSVP
+         * without an email.
+         */
 
         const { error } =
             await supabaseClient
                 .from("Guests")
                 .update({
-                    email:
-                        emailInput.value.trim(),
-
-                    rsvpStatus:
-                        "Not Attending",
-
+                    email: email || null,
+                    rsvpStatus: "Not Attending",
                     guest2: "",
-                    guest3: ""
+                    guest3: "",
+                    seats: 0
                 })
-                .eq("id", currentGuest.id);
+                .eq(
+                    "id",
+                    currentGuest.id
+                );
 
         if (error) {
+            rsvpError.textContent =
+                error.message;
 
-            alert(error.message);
+            show(rsvpError);
+
             return;
         }
+
+        /*
+         * Update the current guest object
+         * so the page immediately reflects
+         * the new RSVP status.
+         */
+
+        currentGuest.email =
+            email || null;
 
         currentGuest.rsvpStatus =
             "Not Attending";
 
-        currentGuest.guest2 = "";
-        currentGuest.guest3 = "";
+        currentGuest.guest2 =
+            "";
 
-        renderGuest();
-    
-        rsvpStatus.className = "";
+        currentGuest.guest3 =
+            "";
 
-        if (currentGuest.rsvpStatus === "Attending") {
+        currentGuest.seats =
+            0;
 
-            rsvpStatus.textContent =
-                "ATTENDANCE CONFIRMED ✓";
+        /*
+         * Update the screen.
+         */
 
-            rsvpStatus.classList.add(
-                "rsvp-confirmed"
-            );
+        rsvpStatus.textContent =
+            "UNABLE TO ATTEND";
 
-        } else if (currentGuest.rsvpStatus === "Not Attending") {
+        hide(seatCount);
+        hide(emailCard);
+        hide(partyCard);
 
-            rsvpStatus.textContent =
-                "UNABLE TO ATTEND";
+        hide(guest2Text);
+        hide(guest3Text);
+        hide(removeGuest2);
+        hide(removeGuest3);
 
-            rsvpStatus.classList.add(
-                "rsvp-declined"
-            );
+        hide(guest1Input);
+        hide(guest2Input);
+
+        hide(rsvpError);
+
+        confirmButton.textContent =
+            "Unable To Attend";
+
+        confirmButton.disabled =
+            true;
+
+        hide(declineButton);
+    }
+);
+
+// =========================
+// REMOVE GUEST #2 BUTTON
+// =========================
+
+removeGuest2.addEventListener(
+    "click",
+    () => {
+
+        if (!currentGuest) {
+            return;
+        }
+
+        openRemoveGuestModal(2);
+    }
+);
+
+// =========================
+// REMOVE GUEST #3 BUTTON
+// =========================
+
+removeGuest3.addEventListener(
+    "click",
+    () => {
+
+        if (!currentGuest) {
+            return;
+        }
+
+        openRemoveGuestModal(3);
+    }
+);
+
+// =========================
+// CANCEL REMOVE
+// =========================
+
+cancelRemoveGuest.addEventListener(
+    "click",
+    () => {
+
+        closeRemoveGuestModal();
+    }
+);
+
+// =========================
+// CONFIRM REMOVE
+// =========================
+
+confirmRemoveGuest.addEventListener(
+    "click",
+    async () => {
+
+        if (
+            !currentGuest ||
+            !guestToRemove
+        ) {
+            closeRemoveGuestModal();
+            return;
+        }
+
+        // =========================
+        // REMOVE GUEST #2
+        // =========================
+
+        if (
+            guestToRemove === 2
+        ) {
+
+            // If Guest #3 exists,
+            // move them into Guest #2.
+            if (
+                currentGuest.guest3 &&
+                currentGuest.guest3.trim() !== ""
+            ) {
+
+                currentGuest.guest2 =
+                    currentGuest.guest3;
+
+                currentGuest.guest3 = "";
+
+            } else {
+
+                currentGuest.guest2 = "";
+            }
+        }
+
+        // =========================
+        // REMOVE GUEST #3
+        // =========================
+
+        if (
+            guestToRemove === 3
+        ) {
+
+            currentGuest.guest3 = "";
+        }
+
+        // =========================
+        // RECALCULATE SEATS
+        // =========================
+
+        let confirmedSeats = 1;
+
+        if (
+            currentGuest.guest2 &&
+            currentGuest.guest2.trim() !== ""
+        ) {
+
+            confirmedSeats++;
+        }
+
+        if (
+            currentGuest.guest3 &&
+            currentGuest.guest3.trim() !== ""
+        ) {
+
+            confirmedSeats++;
+        }
+
+        currentGuest.seats =
+            confirmedSeats;
+
+        // =========================
+        // UPDATE SUPABASE
+        // =========================
+
+        const { error } =
+            await supabaseClient
+                .from("Guests")
+                .update({
+                    guest2:
+                        currentGuest.guest2,
+
+                    guest3:
+                        currentGuest.guest3,
+
+                    seats:
+                        currentGuest.seats
+                })
+                .eq(
+                    "id",
+                    currentGuest.id
+                );
+
+        if (error) {
+
+            alert(error.message);
+
+            return;
+        }
+
+        // =========================
+        // CLOSE MODAL
+        // =========================
+
+        closeRemoveGuestModal();
+
+        // =========================
+        // UPDATE SEAT COUNT
+        // =========================
+
+        updateConfirmedSeatDisplay();
+
+        // =========================
+        // UPDATE GUEST #2
+        // =========================
+
+        if (
+            currentGuest.guest2 &&
+            currentGuest.guest2.trim() !== ""
+        ) {
+
+            guest2Text.textContent =
+                "Guest #2: " +
+                currentGuest.guest2;
+
+            show(guest2Text);
+            show(removeGuest2);
 
         } else {
 
-            rsvpStatus.textContent =
-                "AWAITING RESPONSE";
+            hide(guest2Text);
+            hide(removeGuest2);
+        }
 
-            rsvpStatus.classList.add(
-                "rsvp-pending"
-            );
+        // =========================
+        // UPDATE GUEST #3
+        // =========================
+
+        if (
+            currentGuest.guest3 &&
+            currentGuest.guest3.trim() !== ""
+        ) {
+
+            guest3Text.textContent =
+                "Guest #3: " +
+                currentGuest.guest3;
+
+            show(guest3Text);
+            show(removeGuest3);
+
+        } else {
+
+            hide(guest3Text);
+            hide(removeGuest3);
+        }
+
+        // =========================
+        // NEVER SHOW INPUTS
+        // =========================
+
+        hide(guest1Input);
+        hide(guest2Input);
+
+        // =========================
+        // IF ONLY PRIMARY GUEST
+        // REMAINS
+        // =========================
+
+        if (
+            currentGuest.seats === 1
+        ) {
+
+            hidePartySection();
         }
     }
 );

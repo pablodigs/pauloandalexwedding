@@ -166,7 +166,19 @@ p {
 
     letter-spacing: 5px;
 
-    margin-top: 12px;
+    margin-top: 0px;
+}
+
+.hero-subtext{
+    font-family: 'Cormorant Garamond Light';
+
+    font-style: italic;
+
+    color: rgba(255,255,255,.85);
+
+    letter-spacing: 5px;
+
+    margin-top: 15px;
 }
 
 .hero-date {
@@ -180,7 +192,7 @@ p {
 
 .scroll-button {
 
-    margin-top: 40px;
+    margin-top: 20px;
 
     padding:
         14px 28px;
@@ -234,6 +246,27 @@ p {
         20px auto 0;
 }
 
+#pageBreak {
+    position: relative;
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.82),
+            rgba(255, 255, 255, 0.82)
+        ),
+        url("images/quote-bg.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#quote {
+    text-align: center;
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 40px;
+    padding: 110px;
+}
 /* =========================
    CARDS
 ========================= */
@@ -638,5 +671,297 @@ footer h3 {
     .card {
 
         padding: 25px;
+    }
+}
+
+/* =========================
+   VENUE INFORMATION
+   ========================= */
+
+.venue-info {
+    padding: 36px 32px 28px;
+    text-align: center;
+}
+
+.venue-type {
+    margin: 0 0 12px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    font-weight: 500;
+}
+
+.venue-info h3 {
+    margin: 0 auto;
+    max-width: 600px;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.venue-note {
+    margin: 8px 0 20px;
+    font-size: 13px;
+    font-style: italic;
+    opacity: 0.65;
+}
+
+.venue-time {
+    margin: 0 0 10px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+.venue-address {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.7;
+    opacity: 0.7;
+}
+
+
+/* =========================
+   MAP
+   ========================= */
+
+.map-container {
+    width: 100%;
+    height: 380px;
+    overflow: hidden;
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+}
+
+
+/* =========================
+   NAVIGATION
+   ========================= */
+
+.navigation {
+    padding: 24px 32px 32px;
+    text-align: center;
+}
+
+.navigation-label {
+    margin: 0 0 14px;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+}
+
+.navigation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.navigation-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    min-width: 160px;
+    padding: 12px 18px;
+
+    border: 1px solid rgba(0, 0, 0, 0.15);
+
+    color: inherit;
+    text-decoration: none;
+
+    font-size: 12px;
+    letter-spacing: 0.5px;
+
+    transition: all 0.25s ease;
+}
+
+.navigation-button img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.navigation-button:hover {
+    background: #f5f5f3;
+    border-color: rgba(0, 0, 0, 0.30);
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 600px) {
+
+    .venue-info {
+        padding: 30px 22px 24px;
+    }
+
+    .venue-info h3 {
+        font-size: 25px;
+    }
+
+    .map-container {
+        height: 300px;
+    }
+
+    .navigation {
+        padding: 22px 18px 26px;
+    }
+
+    .navigation-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .navigation-button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+}
+
+/* =========================
+   REMOVE GUEST MODAL
+   ========================= */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+.modal-card {
+    width: 100%;
+    max-width: 420px;
+
+    box-sizing: border-box;
+
+    padding: 30px 26px;
+
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    text-align: center;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.18);
+}
+
+.modal-card h3 {
+    margin: 0 0 12px;
+
+    font-size: 22px;
+    font-weight: 500;
+
+    color: #222222;
+}
+
+.modal-card p {
+    margin: 0 auto 24px;
+
+    max-width: 340px;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    color: #666666;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+
+    width: 100%;
+}
+
+.modal-actions button {
+    flex: 1;
+
+    min-height: 46px;
+
+    padding: 12px 16px;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.modal-cancel-btn {
+    background: transparent;
+
+    border: 1px solid #d8d8d8;
+
+    color: #444444;
+}
+
+.modal-remove-btn {
+    background: #222222;
+
+    border: 1px solid #222222;
+
+    color: #ffffff;
+}
+
+.modal-actions button:active {
+    transform: scale(0.98);
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 600px) {
+
+    .modal-overlay {
+        padding: 18px;
+    }
+
+    .modal-card {
+        max-width: 100%;
+
+        padding: 26px 20px;
+
+        border-radius: 14px;
+    }
+
+    .modal-card h3 {
+        font-size: 20px;
+    }
+
+    .modal-card p {
+        font-size: 13px;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .modal-actions button {
+        width: 100%;
+        min-height: 48px;
     }
 }
