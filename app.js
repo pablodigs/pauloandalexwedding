@@ -1,3 +1,6 @@
+
+//    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhodGNzemF0bmZtbnFqdHJqd2hoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMzE0MjUsImV4cCI6MjEwNjYwNzQyNX0.SiNVD3vDqt5sf_folcO1SKp9Hy46NMAIXI3fBT-Z0Kk";
+
 // =========================
 // PASSWORD PROTECT
 // =========================
@@ -30,8 +33,6 @@ passwordButton.addEventListener("click", () => {
             "Incorrect access code.";
     }
 });
-
-//    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhodGNzemF0bmZtbnFqdHJqd2hoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMzE0MjUsImV4cCI6MjEwNjYwNzQyNX0.SiNVD3vDqt5sf_folcO1SKp9Hy46NMAIXI3fBT-Z0Kk";
 
 // =========================
 // SUPABASE
@@ -135,9 +136,107 @@ const cancelRemoveGuest =
 const confirmRemoveGuest =
     document.getElementById("confirmRemoveGuest");
 
+const emailConfirmationNotice =
+    document.getElementById("emailConfirmationNotice");
+
 // =========================
 // HELPERS
 // =========================
+
+// async function sendRSVPNotification(
+//     status,
+//     message = ""
+// ) {
+
+//     const params = {
+
+//         guest_name:
+//             `${currentGuest.firstName} ${currentGuest.lastName}`,
+
+//         status,
+
+//         reserved_seats:
+//             currentGuest.reservedSeats,
+
+//         confirmed_seats:
+//             currentGuest.seats,
+
+//         guest2:
+//             currentGuest.guest2 || "None",
+
+//         guest3:
+//             currentGuest.guest3 || "None",
+
+//         guest_email:
+//             currentGuest.email || "",
+
+//         message
+//     };
+
+//     try {
+
+//         await emailjs.send(
+//             "service_w85dgwi",
+//             "template_5zn2xdp",
+//             params
+//         );
+
+//     } catch (error) {
+
+//         console.error(error);
+//     }
+// }
+
+async function sendGuestConfirmation(
+    status,
+    message
+) {
+
+    //if (!currentGuest.email) return;
+
+    try {
+        if (status == "ATTENDING"){
+            await emailjs.send(
+            "service_w85dgwi",
+            "template_gxjy2ft",
+            {
+                guest_name:
+                    `${currentGuest.firstName} ${currentGuest.lastName}`,
+
+                status,
+
+                confirmed_seats:
+                    currentGuest.seats,
+                
+                email: currentGuest.email
+
+            }
+            );
+        }
+        else{
+            await emailjs.send(
+            "service_w85dgwi",
+            "template_59e75rw",
+            {
+                guest_name:
+                    `${currentGuest.firstName} ${currentGuest.lastName}`,
+
+                status,
+
+                decline_message: message || "No message provided.",
+                
+                email: currentGuest.email || "kkopitea7@gmail.com"
+
+            }
+            );
+        }
+        
+
+    } catch (error) {
+
+        console.error(error);
+    }
+}
 
 function show(el) {
     if (el) {
@@ -286,6 +385,7 @@ function resetUI() {
     hidePartySection();
     hideEmailSection();
     hideActionButtons();
+    hide(emailConfirmationNotice);
 
     rsvpError.textContent = "";
 
@@ -316,6 +416,7 @@ searchButton.addEventListener(
         hidePartySection();
         hideEmailSection();
         hideActionButtons();
+        hide(emailConfirmationNotice);
 
         guest1Input.value = "";
         guest2Input.value = "";
@@ -753,6 +854,8 @@ confirmButton.addEventListener(
 
             rsvpError.textContent =
                 "PLEASE ENTER YOUR EMAIL ADDRESS";
+            
+            show(rsvpError);
 
             return;
         }
@@ -963,13 +1066,16 @@ confirmButton.addEventListener(
         // CONFIRM BUTTON
         // =========================
 
-        confirmButton.textContent =
-            "Attendance Confirmed ✓";
+        // confirmButton.textContent =
+        //     "Attendance Confirmed ✓";
 
-        confirmButton.disabled = true;
+        // confirmButton.disabled = true;
 
+        hide(confirmButton);
         hide(declineButton);
         hide(rsvpError);
+        hide(removeGuest2);
+        hide(removeGuest3);
 
         // =========================
         // HIDE PARTY IF ONLY
@@ -982,6 +1088,21 @@ confirmButton.addEventListener(
 
             hidePartySection();
         }
+
+        // =========================
+        //  SEND EMAIL NOTIFICATIONS
+        // =========================
+        // await sendRSVPNotification(
+        //     "ATTENDING"
+        // );
+
+        await sendGuestConfirmation(
+            "ATTENDING",
+            ""
+        );
+
+        show(emailConfirmationNotice);
+
     }
 );
 
@@ -989,44 +1110,57 @@ confirmButton.addEventListener(
 // DECLINE RSVP
 // =========================
 
-declineButton.addEventListener(
-    "click",
-    async () => {
+    declineButton.addEventListener("click", () => {
 
-        if (!currentGuest) {
-            return;
-        }
+        openDeclineModal();
+
+    });
+
+    const declineModal =
+        document.getElementById("declineModal");
+
+    const declineMessage =
+        document.getElementById("declineMessage");
+
+    function openDeclineModal() {
+
+        declineMessage.value = "";
+
+        declineModal.classList.remove("hidden");
+    }
+
+    function closeDeclineModal() {
+
+        declineModal.classList.add("hidden");
+    }
+
+    async function processDecline(message = "") {
 
         const email =
             emailInput.value.trim();
 
-        /*
-         * EMAIL IS OPTIONAL WHEN DECLINING.
-         *
-         * If the guest entered an email,
-         * we will save it.
-         *
-         * If they leave it blank,
-         * we will simply save the RSVP
-         * without an email.
-         */
+        const updateData = {
+
+            email: email || null,
+
+            rsvpStatus: "Not Attending",
+
+            guest2: "",
+            guest3: "",
+
+            seats: 0,
+
+            decline_message: message
+        };
 
         const { error } =
             await supabaseClient
                 .from("Guests")
-                .update({
-                    email: email || null,
-                    rsvpStatus: "Not Attending",
-                    guest2: "",
-                    guest3: "",
-                    seats: 0
-                })
-                .eq(
-                    "id",
-                    currentGuest.id
-                );
+                .update(updateData)
+                .eq("id", currentGuest.id);
 
         if (error) {
+
             rsvpError.textContent =
                 error.message;
 
@@ -1035,40 +1169,25 @@ declineButton.addEventListener(
             return;
         }
 
-        /*
-         * Update the current guest object
-         * so the page immediately reflects
-         * the new RSVP status.
-         */
+        Object.assign(
+            currentGuest,
+            updateData
+        );
 
-        currentGuest.email =
-            email || null;
-
-        currentGuest.rsvpStatus =
-            "Not Attending";
-
-        currentGuest.guest2 =
-            "";
-
-        currentGuest.guest3 =
-            "";
-
-        currentGuest.seats =
-            0;
-
-        /*
-         * Update the screen.
-         */
+        // Update UI
 
         rsvpStatus.textContent =
             "UNABLE TO ATTEND";
 
         hide(seatCount);
+
         hide(emailCard);
+
         hide(partyCard);
 
         hide(guest2Text);
         hide(guest3Text);
+
         hide(removeGuest2);
         hide(removeGuest3);
 
@@ -1077,15 +1196,45 @@ declineButton.addEventListener(
 
         hide(rsvpError);
 
-        confirmButton.textContent =
-            "Unable To Attend";
-
-        confirmButton.disabled =
-            true;
-
+        hide(confirmButton);
         hide(declineButton);
+
+        closeDeclineModal();
+        
+        // =========================
+        //  SEND EMAIL NOTIFICATIONS
+        // =========================
+        await sendGuestConfirmation(
+            "NOT ATTENDING",
+            declineMessage.value.trim()
+        );
+
+        if (currentGuest.email != null) {
+            show(emailConfirmationNotice);
+        }
+
     }
-);
+    document
+        .getElementById("sendDeclineMessage")
+        .addEventListener(
+            "click",
+            async () => {
+
+                await processDecline(
+                    declineMessage.value.trim()
+                );
+            }
+        );
+
+    document
+        .getElementById("skipDeclineMessage")
+        .addEventListener(
+            "click",
+            async () => {
+
+                await processDecline("");
+            }
+        );
 
 // =========================
 // REMOVE GUEST #2 BUTTON

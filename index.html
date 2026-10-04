@@ -435,6 +435,11 @@
 
             <p id="rsvpStatus"></p>
 
+            <p id="emailConfirmationNotice" class="email-confirmation-notice hidden">
+                A confirmation email has been sent to your inbox.
+                If you don't see it within a few minutes, please check your Spam or Junk folder.
+            </p>
+
         </div>
 
         <!-- PARTY CARD -->
@@ -575,7 +580,160 @@
 
     </div>
 
+    <!-- Gallery Lightbox -->
+    <div id="lightbox" class="lightbox">
+
+        <span class="close">&times;</span>
+
+        <span class="prev">&#10094;</span>
+
+        <img id="lightbox-img" src="" alt="">
+
+        <div id="image-counter" class="image-counter"></div>
+
+        <span class="next">&#10095;</span>
+
+    </div>
+
+     <!-- I can't make it modal -->
+    <div id="declineModal" class="modal hidden">
+
+        <div class="modal-content">
+
+            <h3>We'll Miss You</h3>
+
+            <p>
+                We're sorry you won't be able to celebrate with us.
+                If you'd like to leave a message for the couple,
+                we'd love to hear from you.
+            </p>
+
+            <textarea id="declineMessage"></textarea>
+
+            <div class="modal-actions">
+
+                <button id="skipDeclineMessage" class = "modal-cancel-btn">
+                    Skip
+                </button>
+                <button id="sendDeclineMessage" class = "modal-remove-btn">
+                    Send Message
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        const galleryImages = document.querySelectorAll('.gallery img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const closeBtn = document.querySelector('.close');
+        const prevBtn = document.querySelector('.prev');
+        const nextBtn = document.querySelector('.next');
+        const counter = document.getElementById('image-counter');
+
+        let currentIndex = 0;
+
+        // Open image
+        galleryImages.forEach((img, index) => {
+            img.addEventListener('click', () => {
+                currentIndex = index;
+                showImage();
+                lightbox.style.display = 'flex';
+            });
+        });
+
+        function showImage() {
+            lightboxImg.classList.remove('show');
+            setTimeout(() => {
+                lightboxImg.src = galleryImages[currentIndex].src;
+                counter.textContent =
+                    `${currentIndex + 1} / ${galleryImages.length}`;
+                lightboxImg.onload = () => {
+                    lightboxImg.classList.add('show');
+                };
+            }, 100);
+        }
+
+        // Next image
+        nextBtn.addEventListener('click', () => {
+            currentIndex =
+                (currentIndex + 1) % galleryImages.length;
+            showImage();
+        });
+
+        // Previous image
+        prevBtn.addEventListener('click', () => {
+            currentIndex =
+                (currentIndex - 1 + galleryImages.length) %
+                galleryImages.length;
+            showImage();
+        });
+
+        // Close
+        closeBtn.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+
+        // Close when clicking background
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.style.display = 'none';
+            }
+        });
+
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.style.display !== 'flex') return;
+
+            if (e.key === 'ArrowRight') {
+                nextBtn.click();
+            }
+
+            if (e.key === 'ArrowLeft') {
+                prevBtn.click();
+            }
+
+            if (e.key === 'Escape') {
+                lightbox.style.display = 'none';
+            }
+        });
+
+        // Mobile Support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        lightbox.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        lightbox.addEventListener('touchend', (e) => {
+
+            touchEndX = e.changedTouches[0].screenX;
+
+            const difference = touchStartX - touchEndX;
+
+            if (difference > 50) {
+                nextBtn.click();
+            }
+
+            if (difference < -50) {
+                prevBtn.click();
+            }
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+
+    <script>
+        emailjs.init({
+            publicKey: "UtnUsMFkx88bcaG2X"
+        });
+    </script>
     <script src="app.js"></script>
 
 </body>
