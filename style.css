@@ -176,9 +176,7 @@ p {
 }
 
 .hero-subtext{
-    font-family: 'Cormorant Garamond Light';
-
-    font-style: italic;
+    font-family: 'Pinyon Script', cursive;
 
     color: rgba(255,255,255,.85);
 
@@ -734,7 +732,7 @@ footer h3 {
 
 .map-container {
     width: 100%;
-    height: 380px;
+    height: 555px;
     overflow: hidden;
 }
 
@@ -745,6 +743,11 @@ footer h3 {
     display: block;
 }
 
+#venue-img {
+    width: 100%;
+    border: 0;
+    display: block;
+}
 
 /* =========================
    NAVIGATION
@@ -815,7 +818,7 @@ footer h3 {
     }
 
     .map-container {
-        height: 300px;
+        height: 230px;
     }
 
     .navigation {
@@ -1375,4 +1378,142 @@ footer h3 {
     font-family: 'Cormorant Garamond', serif;
     font-size: 18px;
     letter-spacing: 2px;
+}
+
+
+/* =========================
+   ATTIRE & PALETTE 
+   ========================= */
+.attire-card {
+    max-width: 950px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.attire-meta {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 25px;
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+}
+
+#attireRole {
+    font-weight: 600;
+}
+
+#attireCounter {
+    opacity: 0.65;
+}
+
+.attire-showcase {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+}
+
+.attire-content {
+    flex: 1;
+}
+
+.attire-content img {
+
+    width: 100%;
+    max-width: 500px;
+
+    height: auto;
+
+    display: block;
+
+    margin: 0 auto;
+
+    border-radius: 8px;
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+.attire-prev,
+.attire-next {
+
+    background: transparent;
+    border: none;
+
+    font-size: 40px;
+
+    cursor: pointer;
+
+    padding: 10px;
+
+    color: #000;
+
+    transition: opacity .3s ease;
+}
+
+.attire-prev:hover,
+.attire-next:hover {
+    opacity: .5;
+}
+
+.attire-dots {
+
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    margin-top: 25px;
+}
+
+.dot {
+
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    background: #d4d4d4;
+
+    transition: .3s ease;
+}
+
+.dot.active {
+    background: #8f7a68;
+    transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+
+    .attire-card {
+        padding: 25px;
+    }
+
+    .attire-meta {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    .attire-showcase {
+        gap: 4px;
+    }
+
+    .attire-prev,
+    .attire-next {
+        font-size: 28px;
+        padding: 5px;
+    }
+
+    .attire-content img {
+        max-width: 100%;
+    }
+
 }

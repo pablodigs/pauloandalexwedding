@@ -109,12 +109,13 @@
 
             <div class="map-container">
 
-                <iframe
+                <!-- <iframe
                     src="https://www.google.com/maps?q=Diocesan+Shrine+and+Parish+of+Saint+Pio+of+Pietrelcina,+Antipolo&output=embed"
                     loading="lazy"
                     allowfullscreen=""
                     referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
+                </iframe> -->
+                <img src = "images/venue/ceremony.jpg" id = "venue-img">
 
             </div>
 
@@ -192,12 +193,13 @@
 
             <div class="map-container">
 
-                <iframe
+                <!-- <iframe
                     src="https://www.google.com/maps?q=LeBlanc+Hotel+and+Resort,+Antipolo&output=embed"
                     loading="lazy"
                     allowfullscreen=""
                     referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
+                </iframe> -->
+                <img src = "images/venue/reception.jpg" id = "venue-img">
 
             </div>
 
@@ -294,25 +296,49 @@
             <div class="section-line"></div>
         </div>
 
-        <div class="card">
+        <div class="card attire-card">
 
-            <p>
-                Formal Attire
-            </p>
+            <div class="attire-meta">
 
-            <p>
-                Kindly wear colors from our wedding palette.
-            </p>
+                <span id="attireRole">Guests</span>
 
-            <div class="palette">
-
-                <div class="color sage"></div>
-                <div class="color olive"></div>
-                <div class="color brown"></div>
-                <div class="color beige"></div>
+                <span id="attireCounter">1 of 7</span>
 
             </div>
 
+            <div class="attire-showcase">
+
+                <button class="attire-prev">
+                    &#10094;
+                </button>
+
+                <div class="attire-content">
+
+                    <img
+                        id="attireImage"
+                        src="images/attire/guests.png"
+                        alt="Attire Guide"
+                    >
+
+                </div>
+
+                <button class="attire-next">
+                    &#10095;
+                </button>
+
+            </div>
+
+            <div class="attire-dots">
+
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+
+            </div>
         </div>
 
     </section>
@@ -331,35 +357,32 @@
             <div class="faq-item">
                 <h4>When should I RSVP by?</h4>
                 <p>
-                    Please respond by October 31, 2026.
+                    We kindly ask that you submit your RSVP by <u>October 31, 2026.</u> <br>
+                    Final guest counts must be provided to our venue and suppliers shortly after this date, so any invitations without a response by then will be marked as unable to attend.
+                    <br>We hope you'll be celebrating with us, but we completely understand if you're unable to join.
                 </p>
             </div>
 
             <div class="faq-item">
                 <h4>Can I bring a plus-one?</h4>
                 <p>
-                    Only guests already included in the reservation may attend.
+                    To help us keep the celebration intimate and comfortable for everyone, we are only able to accommodate the guests included in each invitation. <br>You may check the number of reserved seats under the Attendance & Party section of this website. If a guest is included in your reservation, there will already be a seat reserved for them.
                 </p>
             </div>
 
             <div class="faq-item">
                 <h4>Can I bring children?</h4>
                 <p>
-                    Due to limited seating capacity, our celebration will be an adults-only event.
-                </p>
-            </div>
-
-            <div class="faq-item">
-                <h4>What should I wear?</h4>
-                <p>
-                    Formal attire following our Attire & Palette guide.
+                    While we adore your little ones, our wedding celebration will be an adults-only occasion.
+                    <br>We hope this gives everyone the opportunity to relax, enjoy the evening, and celebrate with us without any additional responsibilities. Thank you for your understanding.
                 </p>
             </div>
 
             <div class="faq-item">
                 <h4>Is parking available?</h4>
                 <p>
-                    Parking is available at both venues, though spaces may be limited.
+                    Yes. Both the ceremony and reception venues have designated parking areas available for guests. <br>
+                    Parking spaces are limited, so if you're able to carpool or share a ride with family and friends, we'd greatly appreciate it.
                 </p>
             </div>
 
@@ -722,6 +745,167 @@
                 prevBtn.click();
             }
         });
+    </script>
+
+    <script>
+
+        const attireSlides = [
+
+            {
+                role: "Guests",
+                image: "images/attire/guests.png"
+            },
+
+            {
+                role: "Principal Sponsors",
+                image: "images/attire/principal-sponsors.jpg"
+            },
+
+            {
+                role: "Parents",
+                image: "images/attire/parents.jpg"
+            },
+
+            {
+                role: "Bridesmaids",
+                image: "images/attire/bridesmaids.png"
+            },
+
+            {
+                role: "Maid of Honor",
+                image: "images/attire/maid-of-honor.jpg"
+            },
+
+            {
+                role: "Groomsmen",
+                image: "images/attire/groomsmen.jpg"
+            },
+
+            {
+                role: "Best Man",
+                image: "images/attire/best-man.jpg"
+            }
+
+        ];
+
+        let attireIndex = 0;
+
+        const attireImage =
+            document.getElementById("attireImage");
+
+        const attireRole =
+            document.getElementById("attireRole");
+
+        const attireCounter =
+            document.getElementById("attireCounter");
+
+        const dots =
+            document.querySelectorAll(".dot");
+
+        function updateAttire() {
+
+            attireImage.style.opacity = 0;
+
+            setTimeout(() => {
+
+                attireImage.src =
+                    attireSlides[attireIndex].image;
+
+                attireRole.textContent =
+                    attireSlides[attireIndex].role;
+
+                attireCounter.textContent =
+                    `${attireIndex + 1} of ${attireSlides.length}`;
+
+                dots.forEach(dot =>
+                    dot.classList.remove("active")
+                );
+
+                dots[attireIndex]
+                    .classList.add("active");
+
+                attireImage.style.opacity = 1;
+
+            }, 150);
+
+        }
+
+        document
+            .querySelector(".attire-next")
+            .addEventListener("click", () => {
+
+                attireIndex =
+                    (attireIndex + 1)
+                    % attireSlides.length;
+
+                updateAttire();
+
+            });
+
+        document
+            .querySelector(".attire-prev")
+            .addEventListener("click", () => {
+
+                attireIndex =
+                    (attireIndex - 1 +
+                    attireSlides.length)
+                    % attireSlides.length;
+
+                updateAttire();
+
+            });
+
+    </script>
+
+    <script>
+        let attireTouchStart = 0;
+        let attireTouchEnd = 0;
+
+        const attireContainer =
+            document.querySelector(
+                ".attire-showcase"
+            );
+
+        attireContainer.addEventListener(
+            "touchstart",
+            (e) => {
+
+                attireTouchStart =
+                    e.changedTouches[0].screenX;
+
+            }
+        );
+
+        attireContainer.addEventListener(
+            "touchend",
+            (e) => {
+
+                attireTouchEnd =
+                    e.changedTouches[0].screenX;
+
+                const difference =
+                    attireTouchStart
+                    - attireTouchEnd;
+
+                if (difference > 50) {
+
+                    document
+                        .querySelector(".attire-next")
+                        .click();
+
+                }
+
+                if (difference < -50) {
+
+                    document
+                        .querySelector(".attire-prev")
+                        .click();
+
+                }
+
+            }
+        );
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
