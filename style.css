@@ -523,15 +523,664 @@ button {
     transform:
         translateY(-4px);
 }
+/* ========================================
+    MOBILE GALLERY HIDDEN ON DESKTOP 
+=========================================== */ 
+    .mobile-gallery { display: none; }
 
-/* Mobile */
-@media (max-width: 768px) {
+/* Mobile Small Photo IG View*/
+/* @media (max-width: 768px) {
     .gallery {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 6px;
     }
+} */
+
+/* MOBILE SIMPLE SWIPE */
+ /* @media (max-width: 768px) {
+
+    .gallery {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 10px;
+        padding-bottom: 10px;
+
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .gallery::-webkit-scrollbar {
+        display: none;
+    }
+
+    .gallery img {
+        flex: 0 0 100%;
+        width: 100%;
+        aspect-ratio: 4 / 5;
+        object-fit: cover;
+
+        scroll-snap-align: center;
+        border-radius: 12px;
+    }
+} */
+
+/* =========================================================
+   MOBILE SWIPE GALLERY
+   ========================================================= */
+
+/*
+   Hidden on desktop.
+   This means your existing web gallery is completely
+   unaffected.
+*/
+
+.mobile-gallery {
+    display: none;
 }
+
+
+/* =========================================================
+   MOBILE ONLY
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+
+    /* -----------------------------------------------------
+       HIDE EXISTING DESKTOP GALLERY
+       ----------------------------------------------------- */
+
+    .gallery {
+        display: none;
+    }
+
+
+    /* -----------------------------------------------------
+       SHOW MOBILE SWIPE GALLERY
+       ----------------------------------------------------- */
+
+    .mobile-gallery {
+
+        display: block;
+
+        width: 100%;
+
+        box-sizing: border-box;
+
+        overflow: hidden;
+    }
+
+
+    /* -----------------------------------------------------
+       STACK
+       ----------------------------------------------------- */
+
+    .mobile-gallery-stack {
+
+        position: relative;
+
+        width: 100%;
+
+        /*
+           Keeps the gallery from becoming excessively
+           wide on larger phones.
+        */
+
+        max-width: 390px;
+
+        /*
+           4:5 ratio to match your existing gallery.
+
+           Width : Height
+           4     : 5
+        */
+
+        aspect-ratio: 4 / 5;
+
+        margin: 0 auto;
+
+        /*
+           IMPORTANT:
+           Allows normal vertical page scrolling while
+           still allowing horizontal swipe gestures.
+        */
+
+        touch-action: pan-y;
+
+        user-select: none;
+
+        -webkit-user-select: none;
+
+        -webkit-tap-highlight-color: transparent;
+    }
+
+
+    /* -----------------------------------------------------
+       INDIVIDUAL CARD
+       ----------------------------------------------------- */
+
+    .mobile-gallery-card {
+
+        position: absolute;
+
+        top: 0;
+
+        left: 0;
+
+        width: 100%;
+
+        height: 100%;
+
+        overflow: hidden;
+
+        border-radius: 16px;
+
+        background: #f4f4f4;
+
+        /*
+           Makes the stack feel like physical cards.
+        */
+
+        box-shadow:
+            0 10px 25px rgba(0, 0, 0, 0.12);
+
+        cursor: grab;
+
+        will-change: transform, opacity;
+
+        /*
+           Smooth animation when cards move into
+           their new stack positions.
+        */
+
+        transition:
+            transform .35s cubic-bezier(
+                .22,
+                1,
+                .36,
+                1
+            ),
+            opacity .35s ease,
+            box-shadow .35s ease;
+    }
+
+
+    .mobile-gallery-card:active {
+
+        cursor: grabbing;
+    }
+
+
+    /* -----------------------------------------------------
+       IMAGES
+       ----------------------------------------------------- */
+
+    .mobile-gallery-card img {
+
+        width: 100%;
+
+        height: 100%;
+
+        display: block;
+
+        object-fit: cover;
+
+        border-radius: 16px;
+
+        /*
+           Prevent the browser from treating the image
+           itself as a draggable object.
+        */
+
+        pointer-events: none;
+
+        user-select: none;
+
+        -webkit-user-select: none;
+
+        -webkit-user-drag: none;
+    }
+
+
+    /* -----------------------------------------------------
+       STACK POSITIONS
+       -----------------------------------------------------
+
+       The first card is the main photo.
+
+       The following cards are slightly lower and smaller,
+       creating the "photos underneath" effect.
+    */
+
+
+    /* TOP PHOTO */
+
+    .mobile-gallery-card:nth-child(1) {
+
+        z-index: 14;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+        opacity: 1;
+    }
+
+
+    /* PHOTO UNDERNEATH */
+
+    .mobile-gallery-card:nth-child(2) {
+
+        z-index: 13;
+
+        transform:
+            translateY(10px)
+            scale(.97);
+
+        opacity: 1;
+    }
+
+
+    /* THIRD PHOTO */
+
+    .mobile-gallery-card:nth-child(3) {
+
+        z-index: 12;
+
+        transform:
+            translateY(20px)
+            scale(.94);
+
+        opacity: 1;
+    }
+
+
+    /* FOURTH PHOTO */
+
+    .mobile-gallery-card:nth-child(4) {
+
+        z-index: 11;
+
+        transform:
+            translateY(30px)
+            scale(.91);
+
+        opacity: 1;
+    }
+
+
+    /*
+       Everything beyond the fourth card is hidden
+       deeper in the stack.
+    */
+
+    .mobile-gallery-card:nth-child(n + 5) {
+
+        z-index: 1;
+
+        transform:
+            translateY(35px)
+            scale(.89);
+
+        opacity: 0;
+    }
+
+
+    /* -----------------------------------------------------
+       ACTIVE DRAG
+       ----------------------------------------------------- */
+
+    .mobile-gallery-card.is-dragging {
+
+        /*
+           Disable the normal transition while the user
+           is physically dragging the card.
+        */
+
+        transition: none;
+
+        box-shadow:
+            0 20px 40px rgba(0, 0, 0, 0.18);
+    }
+
+
+    /* -----------------------------------------------------
+       SWIPE LEFT
+       ----------------------------------------------------- */
+
+    .mobile-gallery-card.swipe-left {
+
+        transform:
+            translateX(-130%)
+            rotate(-12deg);
+
+        opacity: 0;
+
+        pointer-events: none;
+    }
+
+
+    /* -----------------------------------------------------
+       SWIPE RIGHT
+       ----------------------------------------------------- */
+
+    .mobile-gallery-card.swipe-right {
+
+        transform:
+            translateX(130%)
+            rotate(12deg);
+
+        opacity: 0;
+
+        pointer-events: none;
+    }
+
+
+    /* -----------------------------------------------------
+       SWIPE HINT
+       ----------------------------------------------------- */
+
+    .mobile-gallery-hint {
+
+        margin:
+
+            30px 0 0;
+
+        text-align: center;
+
+        font-family:
+            "Inter",
+            sans-serif;
+
+        font-size: 10px;
+
+        letter-spacing: 2px;
+
+        text-transform: uppercase;
+
+        opacity: .45;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .mobile-gallery {
+
+        padding-left: 0;
+
+        padding-right: 0;
+    }
+
+    .mobile-gallery-stack {
+
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   GALLERY LIGHTBOX
+   ========================================================= */
+
+/*
+   This works for both desktop and mobile.
+*/
+
+.gallery-lightbox {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    background:
+        rgba(0, 0, 0, .94);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 99999;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+
+        opacity .3s ease,
+
+        visibility .3s ease;
+}
+
+
+.gallery-lightbox.active {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+}
+
+
+/* ---------------------------------------------------------
+   LIGHTBOX IMAGE AREA
+--------------------------------------------------------- */
+
+.lightbox-image-container {
+
+    width: 88vw;
+
+    height: 88vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+
+#lightboxImage {
+
+    max-width: 100%;
+
+    max-height: 100%;
+
+    width: auto;
+
+    height: auto;
+
+    object-fit: contain;
+
+    display: block;
+
+    user-select: none;
+
+    -webkit-user-select: none;
+
+    -webkit-user-drag: none;
+
+    transition:
+        opacity .2s ease;
+}
+
+
+/* ---------------------------------------------------------
+   CLOSE BUTTON
+--------------------------------------------------------- */
+
+.lightbox-close {
+
+    position: absolute;
+
+    top: 20px;
+
+    right: 25px;
+
+    width: 45px;
+
+    height: 45px;
+
+    border: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 38px;
+
+    font-weight: 200;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    z-index: 10;
+
+    opacity: .85;
+}
+
+
+.lightbox-close:hover {
+
+    opacity: 1;
+}
+
+
+/* ---------------------------------------------------------
+   PREVIOUS / NEXT BUTTONS
+--------------------------------------------------------- */
+
+.lightbox-prev,
+.lightbox-next {
+
+    position: absolute;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    width: 55px;
+
+    height: 70px;
+
+    border: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 34px;
+
+    font-weight: 200;
+
+    cursor: pointer;
+
+    z-index: 10;
+
+    opacity: .75;
+
+    transition:
+        opacity .2s ease;
+}
+
+
+.lightbox-prev:hover,
+.lightbox-next:hover {
+
+    opacity: 1;
+}
+
+
+.lightbox-prev {
+
+    left: 20px;
+}
+
+
+.lightbox-next {
+
+    right: 20px;
+}
+
+
+/* =========================================================
+   LIGHTBOX — MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .lightbox-image-container {
+
+        width: 94vw;
+
+        height: 84vh;
+    }
+
+
+    #lightboxImage {
+
+        max-width: 94vw;
+
+        max-height: 84vh;
+    }
+
+
+    .lightbox-close {
+
+        top: 12px;
+
+        right: 12px;
+
+        font-size: 34px;
+    }
+
+
+    .lightbox-prev,
+    .lightbox-next {
+
+        width: 40px;
+
+        height: 55px;
+
+        font-size: 26px;
+    }
+
+
+    .lightbox-prev {
+
+        left: 3px;
+    }
+
+
+    .lightbox-next {
+
+        right: 3px;
+    }
+}
+
+
 
 /* =========================
    PALETTE
@@ -648,11 +1297,11 @@ footer h3 {
 @media (max-width: 768px) {
 
     h1 {
-        font-size: 3.2rem;
+        font-size: 3rem;
     }
 
     h2 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 
     .hero-monogram {

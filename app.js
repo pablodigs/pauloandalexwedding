@@ -1498,3 +1498,722 @@ passwordInput.addEventListener("keydown", event => {
         passwordButton.click();
     }
 });
+
+/* =========================================================
+   WEDDING GALLERY
+   MOBILE SWIPE STACK + LIGHTBOX
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =====================================================
+       MOBILE SWIPE GALLERY
+       ===================================================== */
+
+    const stack = document.querySelector(".mobile-gallery-stack");
+
+    if (stack) {
+
+        const cards = Array.from(
+            stack.querySelectorAll(".mobile-gallery-card")
+        );
+
+        let currentIndex = 0;
+
+        let startX = 0;
+        let startY = 0;
+
+        let currentX = 0;
+
+        let isDragging = false;
+        let isAnimating = false;
+
+        const SWIPE_THRESHOLD = 80;
+
+
+        /* ---------------------------------------------
+           SET INITIAL CARD POSITIONS
+           --------------------------------------------- */
+
+        function updateStack() {
+
+            cards.forEach(function (card, index) {
+
+                const relativeIndex =
+                    (index - currentIndex + cards.length)
+                    % cards.length;
+
+                card.classList.remove(
+                    "is-dragging",
+                    "swipe-left",
+                    "swipe-right"
+                );
+
+                card.style.opacity = "";
+                card.style.pointerEvents = "";
+                card.style.transition = "";
+
+                if (relativeIndex === 0) {
+
+                    /* TOP CARD */
+
+                    card.style.zIndex = cards.length;
+                    card.style.transform =
+                        "translateY(0px) scale(1)";
+                    card.style.opacity = "1";
+                    card.style.pointerEvents = "auto";
+
+                } else if (relativeIndex === 1) {
+
+                    /* SECOND CARD */
+
+                    card.style.zIndex = cards.length - 1;
+                    card.style.transform =
+                        "translateY(10px) scale(0.97)";
+                    card.style.opacity = "1";
+                    card.style.pointerEvents = "none";
+
+                } else if (relativeIndex === 2) {
+
+                    /* THIRD CARD */
+
+                    card.style.zIndex = cards.length - 2;
+                    card.style.transform =
+                        "translateY(20px) scale(0.94)";
+                    card.style.opacity = "1";
+                    card.style.pointerEvents = "none";
+
+                } else if (relativeIndex === 3) {
+
+                    /* FOURTH CARD */
+
+                    card.style.zIndex = cards.length - 3;
+                    card.style.transform =
+                        "translateY(30px) scale(0.91)";
+                    card.style.opacity = "1";
+                    card.style.pointerEvents = "none";
+
+                } else {
+
+                    /* CARDS DEEPER IN STACK */
+
+                    card.style.zIndex = 1;
+                    card.style.transform =
+                        "translateY(35px) scale(0.89)";
+                    card.style.opacity = "0";
+                    card.style.pointerEvents = "none";
+                }
+            });
+        }
+
+
+        /* ---------------------------------------------
+           MOVE TO NEXT PHOTO
+           --------------------------------------------- */
+
+        function nextCard(direction) {
+
+            if (isAnimating) {
+                return;
+            }
+
+            isAnimating = true;
+
+            const topCard = cards[currentIndex];
+
+            if (direction === "left") {
+
+                topCard.classList.add("swipe-left");
+
+            } else {
+
+                topCard.classList.add("swipe-right");
+            }
+
+
+            /*
+             * Wait for the card to finish leaving
+             * before bringing the next card forward.
+             */
+
+            setTimeout(function () {
+
+                currentIndex =
+                    (currentIndex + 1) % cards.length;
+
+                updateStack();
+
+                isAnimating = false;
+
+            }, 350);
+        }
+
+
+        /* ---------------------------------------------
+           POINTER DOWN
+           --------------------------------------------- */
+
+        function pointerDown(event) {
+
+            if (isAnimating) {
+                return;
+            }
+
+            const topCard = cards[currentIndex];
+
+            startX = event.clientX;
+            startY = event.clientY;
+
+            currentX = 0;
+
+            isDragging = true;
+
+            topCard.classList.add("is-dragging");
+        }
+
+
+        /* ---------------------------------------------
+           POINTER MOVE
+           --------------------------------------------- */
+
+        function pointerMove(event) {
+
+            if (!isDragging || isAnimating) {
+                return;
+            }
+
+            const topCard = cards[currentIndex];
+
+            currentX = event.clientX - startX;
+
+            const currentY =
+                event.clientY - startY;
+
+
+            /*
+             * Prevent vertical scrolling from being
+             * affected by small horizontal movement.
+             */
+
+            if (
+                Math.abs(currentX) <
+                Math.abs(currentY)
+            ) {
+                return;
+            }
+
+
+            const rotation =
+                currentX * 0.05;
+
+            const movement =
+                currentX * 1.05;
+
+            topCard.style.transform =
+                `translateX(${movement}px) rotate(${rotation}deg)`;
+
+            /*
+             * Slightly fade the card as it moves away.
+             */
+
+            const opacity =
+                Math.max(
+                    0.55,
+                    1 - Math.abs(currentX) / 500
+                );
+
+            topCard.style.opacity = opacity;
+        }
+
+
+        /* ---------------------------------------------
+           POINTER UP
+           --------------------------------------------- */
+
+        function pointerUp() {
+
+            if (!isDragging || isAnimating) {
+                return;
+            }
+
+            isDragging = false;
+
+            const topCard = cards[currentIndex];
+
+            topCard.classList.remove("is-dragging");
+
+
+            if (Math.abs(currentX) >= SWIPE_THRESHOLD) {
+
+                /*
+                 * Swipe left OR right.
+                 *
+                 * Both directions advance to the
+                 * next photograph, similar to a card deck.
+                 */
+
+                if (currentX < 0) {
+                    nextCard("left");
+                } else {
+                    nextCard("right");
+                }
+
+            } else {
+
+                /*
+                 * Not enough movement.
+                 * Return the card to its original position.
+                 */
+
+                topCard.style.transition =
+                    "transform 0.3s ease, opacity 0.3s ease";
+
+                topCard.style.transform =
+                    "translateY(0px) scale(1)";
+
+                topCard.style.opacity = "1";
+
+                setTimeout(function () {
+
+                    topCard.style.transition = "";
+
+                }, 300);
+            }
+
+            currentX = 0;
+        }
+
+
+        /* ---------------------------------------------
+           POINTER CANCEL
+           --------------------------------------------- */
+
+        function pointerCancel() {
+
+            if (!isDragging) {
+                return;
+            }
+
+            isDragging = false;
+
+            const topCard = cards[currentIndex];
+
+            topCard.classList.remove("is-dragging");
+
+            topCard.style.transition =
+                "transform 0.3s ease, opacity 0.3s ease";
+
+            topCard.style.transform =
+                "translateY(0px) scale(1)";
+
+            topCard.style.opacity = "1";
+
+            setTimeout(function () {
+
+                topCard.style.transition = "";
+
+            }, 300);
+
+            currentX = 0;
+        }
+
+
+        /* ---------------------------------------------
+           POINTER EVENTS
+           --------------------------------------------- */
+
+        stack.addEventListener(
+            "pointerdown",
+            pointerDown
+        );
+
+        stack.addEventListener(
+            "pointermove",
+            pointerMove
+        );
+
+        stack.addEventListener(
+            "pointerup",
+            pointerUp
+        );
+
+        stack.addEventListener(
+            "pointercancel",
+            pointerCancel
+        );
+
+        stack.addEventListener(
+            "pointerleave",
+            function (event) {
+
+                /*
+                 * Only cancel for mouse.
+                 * Touch devices should continue normally.
+                 */
+
+                if (event.pointerType === "mouse") {
+                    pointerCancel();
+                }
+            }
+        );
+
+
+        /* ---------------------------------------------
+           PREVENT IMAGE DRAGGING
+           --------------------------------------------- */
+
+        cards.forEach(function (card) {
+
+            const image = card.querySelector("img");
+
+            if (image) {
+
+                image.addEventListener(
+                    "dragstart",
+                    function (event) {
+                        event.preventDefault();
+                    }
+                );
+
+            }
+        });
+
+
+        /* ---------------------------------------------
+           INITIALIZE
+           --------------------------------------------- */
+
+        updateStack();
+
+
+        /* =================================================
+           LIGHTBOX CLICK FROM MOBILE STACK
+           ================================================= */
+
+        cards.forEach(function (card, index) {
+
+            card.addEventListener("click", function () {
+
+                /*
+                 * Only open lightbox if the card is
+                 * currently the top card.
+                 */
+
+                if (index !== currentIndex) {
+                    return;
+                }
+
+                openLightbox(index);
+            });
+
+        });
+
+    }
+
+
+    /* =====================================================
+       DESKTOP GALLERY
+       ===================================================== */
+
+    const desktopItems =
+        document.querySelectorAll(".gallery-item");
+
+    desktopItems.forEach(function (item, index) {
+
+        item.addEventListener("click", function () {
+
+            openLightbox(index);
+
+        });
+
+    });
+
+
+    /* =====================================================
+       LIGHTBOX
+       ===================================================== */
+
+    const lightbox =
+        document.getElementById("galleryLightbox");
+
+    const lightboxImage =
+        document.getElementById("lightboxImage");
+
+    const closeButton =
+        document.querySelector(".lightbox-close");
+
+    const previousButton =
+        document.querySelector(".lightbox-prev");
+
+    const nextButton =
+        document.querySelector(".lightbox-next");
+
+
+    const galleryImages = [];
+
+    for (let i = 1; i <= 14; i++) {
+
+        galleryImages.push(
+            `images/gallery/gallery${i}.jpg`
+        );
+
+    }
+
+
+    let lightboxIndex = 0;
+
+
+    /* ---------------------------------------------
+       OPEN LIGHTBOX
+       --------------------------------------------- */
+
+    function openLightbox(index) {
+
+        lightboxIndex = index;
+
+        lightboxImage.src =
+            galleryImages[lightboxIndex];
+
+        lightbox.classList.add("active");
+
+        document.body.style.overflow = "hidden";
+    }
+
+
+    /* ---------------------------------------------
+       CLOSE LIGHTBOX
+       --------------------------------------------- */
+
+    function closeLightbox() {
+
+        lightbox.classList.remove("active");
+
+        document.body.style.overflow = "";
+
+    }
+
+
+    /* ---------------------------------------------
+       SHOW LIGHTBOX IMAGE
+       --------------------------------------------- */
+
+    function showLightboxImage(index) {
+
+        if (index < 0) {
+
+            index =
+                galleryImages.length - 1;
+        }
+
+        if (index >= galleryImages.length) {
+
+            index = 0;
+        }
+
+        lightboxIndex = index;
+
+        /*
+         * Small fade animation.
+         */
+
+        lightboxImage.style.opacity = "0";
+
+        setTimeout(function () {
+
+            lightboxImage.src =
+                galleryImages[lightboxIndex];
+
+            lightboxImage.style.opacity = "1";
+
+        }, 100);
+    }
+
+
+    /* ---------------------------------------------
+       CLOSE BUTTON
+       --------------------------------------------- */
+
+    if (closeButton) {
+
+        closeButton.addEventListener(
+            "click",
+            closeLightbox
+        );
+
+    }
+
+
+    /* ---------------------------------------------
+       PREVIOUS
+       --------------------------------------------- */
+
+    if (previousButton) {
+
+        previousButton.addEventListener(
+            "click",
+            function () {
+
+                showLightboxImage(
+                    lightboxIndex - 1
+                );
+
+            }
+        );
+
+    }
+
+
+    /* ---------------------------------------------
+       NEXT
+       --------------------------------------------- */
+
+    if (nextButton) {
+
+        nextButton.addEventListener(
+            "click",
+            function () {
+
+                showLightboxImage(
+                    lightboxIndex + 1
+                );
+
+            }
+        );
+
+    }
+
+
+    /* ---------------------------------------------
+       CLICK OUTSIDE IMAGE
+       --------------------------------------------- */
+
+    if (lightbox) {
+
+        lightbox.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    event.target === lightbox
+                ) {
+
+                    closeLightbox();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* ---------------------------------------------
+       KEYBOARD CONTROLS
+       --------------------------------------------- */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                !lightbox.classList.contains("active")
+            ) {
+                return;
+            }
+
+
+            if (event.key === "Escape") {
+
+                closeLightbox();
+
+            }
+
+
+            if (event.key === "ArrowLeft") {
+
+                showLightboxImage(
+                    lightboxIndex - 1
+                );
+
+            }
+
+
+            if (event.key === "ArrowRight") {
+
+                showLightboxImage(
+                    lightboxIndex + 1
+                );
+
+            }
+
+        }
+    );
+
+
+    /* ---------------------------------------------
+       LIGHTBOX SWIPE ON MOBILE
+       --------------------------------------------- */
+
+    let lightboxStartX = 0;
+
+    let lightboxDragging = false;
+
+
+    if (lightbox) {
+
+        lightbox.addEventListener(
+            "touchstart",
+            function (event) {
+
+                lightboxStartX =
+                    event.touches[0].clientX;
+
+                lightboxDragging = true;
+
+            },
+            { passive: true }
+        );
+
+
+        lightbox.addEventListener(
+            "touchend",
+            function (event) {
+
+                if (!lightboxDragging) {
+                    return;
+                }
+
+                const endX =
+                    event.changedTouches[0].clientX;
+
+                const difference =
+                    endX - lightboxStartX;
+
+
+                if (Math.abs(difference) > 60) {
+
+                    if (difference < 0) {
+
+                        showLightboxImage(
+                            lightboxIndex + 1
+                        );
+
+                    } else {
+
+                        showLightboxImage(
+                            lightboxIndex - 1
+                        );
+
+                    }
+
+                }
+
+                lightboxDragging = false;
+
+            },
+            { passive: true }
+        );
+
+    }
+
+});
