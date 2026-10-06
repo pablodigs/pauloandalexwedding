@@ -204,9 +204,10 @@ async function sendGuestConfirmation(
                     `${currentGuest.firstName} ${currentGuest.lastName}`,
 
                 status,
+                
+                guest1: currentGuest.guest2 || "",
 
-                confirmed_seats:
-                    currentGuest.seats,
+                guest2: currentGuest.guest3 || "",
                 
                 email: currentGuest.email
 
