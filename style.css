@@ -254,8 +254,8 @@ p {
     position: relative;
     background-image:
         linear-gradient(
-            rgba(255, 255, 255, 0.85),
-            rgba(255, 255, 255, 0.85)
+            rgba(255, 255, 255, 0.40),
+            rgba(255, 255, 255, 0.40)
         ),
         url("images/quote-bg.jpg");
 
