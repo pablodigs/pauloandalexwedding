@@ -524,6 +524,15 @@ button {
         translateY(-4px);
 }
 
+/* Mobile */
+@media (max-width: 768px) {
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+    }
+}
+
 /* =========================
    PALETTE
 ========================= */
@@ -615,7 +624,7 @@ footer {
     padding:
         0px 20px;
 
-    background: white;
+    background: var(--brown);
 
     margin-top: 100px;
 }
@@ -643,16 +652,11 @@ footer h3 {
     }
 
     h2 {
-        font-size: 1.7rem;
+        font-size: 1.5rem;
     }
 
     .hero-monogram {
         width: 120px;
-    }
-
-    .gallery {
-        grid-template-columns:
-            1fr;
     }
 
     .guest-row {
@@ -667,7 +671,7 @@ footer h3 {
 
     .section {
         padding:
-            90px 18px;
+            45px 18px;
     }
 
     .card {
