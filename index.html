@@ -512,9 +512,8 @@
                 placeholder="Search by name">
 
             <button id="searchButton">
-                Search
+                <span class="button-text">Find My Invitation</span>
             </button>
-
         </div>
 
         <!-- RESERVATION CARD -->
@@ -716,6 +715,49 @@
                 <button id="sendDeclineMessage" class = "modal-remove-btn">
                     Send Message
                 </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    
+     <!-- RSVP SUCCESS POPUP -->
+    <div id="rsvpSuccessOverlay" class="rsvp-popup-overlay">
+
+        <div class="rsvp-success-popup">
+
+            <button
+                type="button"
+                id="rsvpSuccessClose"
+                class="rsvp-popup-close"
+                aria-label="Close">
+                &times;
+            </button>
+
+            <div class="rsvp-popup-content">
+
+                <h3>RSVP Recorded</h3>
+
+                <div class="rsvp-popup-divider"></div>
+
+                <p>
+                    Your RSVP has been recorded and can no longer be
+                    updated through this website.
+                </p>
+
+                <p>
+                    Need to make a change? Please reach out to
+                    <strong>Alex &amp; Paulo</strong>.
+                </p>
+
+                <button
+                    type="button"
+                    id="rsvpSuccessContinue"
+                    class="rsvp-popup-button">
+                    CONTINUE
+                </button>
+
             </div>
 
         </div>

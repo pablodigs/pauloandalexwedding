@@ -139,6 +139,67 @@ const confirmRemoveGuest =
 const emailConfirmationNotice =
     document.getElementById("emailConfirmationNotice");
 
+
+
+/* =========================
+    RSVP SUCCESS POPUP
+========================= */
+
+const rsvpSuccessOverlay =
+    document.getElementById("rsvpSuccessOverlay");
+
+const rsvpSuccessClose =
+    document.getElementById("rsvpSuccessClose");
+
+const rsvpSuccessContinue =
+    document.getElementById("rsvpSuccessContinue");
+
+
+function showRsvpSuccessPopup() {
+
+    rsvpSuccessOverlay.classList.add("show");
+
+    document.body.style.overflow = "hidden";
+}
+
+
+function closeRsvpSuccessPopup() {
+
+    rsvpSuccessOverlay.classList.remove("show");
+
+    document.body.style.overflow = "";
+}
+
+
+/* CONTINUE BUTTON */
+
+rsvpSuccessContinue.addEventListener(
+    "click",
+    closeRsvpSuccessPopup
+);
+
+
+/* X BUTTON */
+
+rsvpSuccessClose.addEventListener(
+    "click",
+    closeRsvpSuccessPopup
+);
+
+
+/* CLICK OUTSIDE POPUP */
+
+rsvpSuccessOverlay.addEventListener(
+    "click",
+    function (event) {
+
+        if (event.target === rsvpSuccessOverlay) {
+            closeRsvpSuccessPopup();
+        }
+
+    }
+);
+
 // =========================
 // HELPERS
 // =========================
@@ -402,8 +463,15 @@ resetUI();
 searchButton.addEventListener(
     "click",
     async () => {
+        searchButton.disabled = true;
+        searchButton.classList.add("loading");
 
-        rsvpError.textContent = "";
+        searchButton.innerHTML = `
+            <div class="button-loading">
+                <div class="spinner"></div>
+                <span>Looking up your reservation...</span>
+            </div>
+        `;
 
         const searchText =
             searchInput.value
@@ -472,7 +540,12 @@ searchButton.addEventListener(
                 searchText === guest2 ||
                 searchText === guest3
             ) {
+                searchButton.disabled = false;
+                searchButton.classList.remove("loading");
 
+                searchButton.innerHTML = `
+                    <span class="button-text">Find My Invitation</span>
+                `;
                 guest = item;
 
                 return true;
@@ -486,9 +559,12 @@ searchButton.addEventListener(
         // =========================
 
         if (!guest) {
+            searchButton.disabled = false;
+            searchButton.classList.remove("loading");
 
-            currentGuest = null;
-
+            searchButton.innerHTML = `
+                <span class="button-text">Find My Invitation</span>
+            `;
             hidePartySection();
             hideEmailSection();
             hideActionButtons();
@@ -967,6 +1043,8 @@ confirmButton.addEventListener(
             return;
         }
 
+        showRsvpSuccessPopup();
+
         // =========================
         // UPDATE SEAT DISPLAY
         // =========================
@@ -1169,6 +1247,7 @@ confirmButton.addEventListener(
 
             return;
         }
+        showRsvpSuccessPopup();
 
         Object.assign(
             currentGuest,
