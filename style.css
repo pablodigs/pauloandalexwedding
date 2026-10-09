@@ -101,6 +101,7 @@ p {
 #anp {
     font-family: 'Pinyon Script', cursive;
     font-size: 5rem;
+    color: var(--olive);
 
 }
 
@@ -235,7 +236,7 @@ p {
 
     text-align: center;
 
-    margin-bottom: 60px;
+    margin-bottom: 20px;
 }
 
 .section-line {
@@ -247,7 +248,7 @@ p {
     background: var(--sage);
 
     margin:
-        20px auto 0;
+        -19px auto 0;
 }
 
 #pageBreak {
@@ -1308,6 +1309,8 @@ button {
 ========================= */
 
 footer {
+    font-size: 12px;
+    font-family: "Aptos", serif;
     text-align: right;
     padding:
         0px 20px;
@@ -1359,7 +1362,7 @@ footer h3 {
 
     .section {
         padding:
-            45px 18px;
+            8px 18px;
     }
 
     .card {
@@ -2421,4 +2424,170 @@ footer h3 {
         line-height: 1.7;
     }
 
+}
+
+
+/* =========================
+   APPRECIATION & PRESENTS
+========================= */
+
+.gift-section {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+
+/* Main gift card */
+
+.gift-card {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    align-items: center;
+
+    max-width: 950px;
+    margin: 35px auto 0;
+
+    background: var(--card);
+    border: 1px solid #e5ded4;
+    border-radius: 16px;
+
+    overflow: hidden;
+}
+
+/* Image area */
+
+.gift-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 320px;
+    padding: 35px;
+
+    /* background: #f1ece4; */
+}
+
+.gift-image img {
+    display: block;
+    width: 100%;
+    max-width: 250px;
+    max-height: 260px;
+
+    object-fit: contain;
+}
+
+/* Text area */
+
+.gift-content {
+    padding: 48px 45px;
+    text-align: center;
+}
+
+.gift-eyebrow {
+    display: block;
+    margin-bottom: 16px;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 3px;
+
+    color: #8b7355;
+}
+
+.gift-content h3 {
+    margin: 0;
+
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3vw, 38px);
+    font-weight: 500;
+    line-height: 1.2;
+
+    color: #292521;
+}
+
+.gift-divider {
+    width: 45px;
+    height: 1px;
+
+    margin: 22px auto;
+
+    background: #a18b70;
+}
+
+.gift-content p {
+    max-width: 430px;
+    margin: 0 auto;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.9;
+
+    color: #625b54;
+}
+
+.gift-signoff {
+    display: block;
+    margin-top: 24px;
+
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px;
+    font-style: italic;
+
+    color: #6b292f;
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .gift-section {
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+
+    .gift-card {
+        grid-template-columns: 1fr;
+        margin-top: 25px;
+        border-radius: 12px;
+    }
+
+    .gift-image {
+        min-height: 0;
+        padding: 25px 20px;
+    }
+
+    .gift-image img {
+        max-width: 180px;
+        max-height: 175px;
+    }
+
+    .gift-content {
+        padding: 30px 24px 35px;
+    }
+
+    .gift-eyebrow {
+        font-size: 9px;
+        letter-spacing: 2.5px;
+        margin-bottom: 12px;
+    }
+
+    .gift-content h3 {
+        font-size: 30px;
+    }
+
+    .gift-divider {
+        margin: 18px auto;
+    }
+
+    .gift-content p {
+        font-size: 13px;
+        line-height: 1.85;
+    }
+
+    .gift-signoff {
+        margin-top: 20px;
+        font-size: 20px;
+    }
 }
