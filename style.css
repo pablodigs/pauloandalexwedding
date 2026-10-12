@@ -2586,3 +2586,309 @@ footer h3 {
     }
 }
 
+
+/* =========================
+   FLOATING BACK TO TOP
+========================= */
+
+#backToTop {
+    position: fixed;
+    right: 28px;
+    bottom: 28px;
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+    color: var(--brown);
+
+    border: 1px solid rgba(80, 65, 50, 0.2);
+    border-radius: 50%;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.10);
+
+    cursor: pointer;
+    z-index: 9999;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform: translateY(12px) scale(0.95);
+
+    transition:
+        opacity 0.35s ease,
+        visibility 0.35s ease,
+        transform 0.35s ease,
+        background 0.3s ease,
+        color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+/* Show when scrolling down */
+
+#backToTop.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+
+/* Hover effect */
+
+#backToTop:hover {
+    background: var(--brown);
+    color: #ffffff;
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+
+    transform: translateY(-4px) scale(1.04);
+}
+
+/* Arrow animation */
+
+#backToTop svg {
+    transition: transform 0.3s ease;
+}
+
+#backToTop:hover svg {
+    transform: translateY(-3px);
+}
+
+/* Keyboard accessibility */
+
+#backToTop:focus-visible {
+    outline: 2px solid #8a765e;
+    outline-offset: 4px;
+}
+
+/* Mobile adjustments */
+
+@media (max-width: 600px) {
+    #backToTop {
+        width: 44px;
+        height: 44px;
+
+        right: 16px;
+        bottom: 18px;
+    }
+
+    #backToTop svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Respect reduced-motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+    #backToTop,
+    #backToTop svg {
+        transition: none;
+    }
+}
+
+
+/* =========================================================
+   GLOBAL MICRO-INTERACTIONS
+========================================================= */
+
+:root {
+    --motion-smooth: cubic-bezier(.22, 1, .36, 1);
+    --motion-fast: 220ms;
+    --motion-medium: 350ms;
+}
+
+
+/* =========================================================
+   1. SECTION HEADINGS
+========================================================= */
+
+.section-header h2 {
+    transition:
+        letter-spacing 0.4s var(--motion-smooth),
+        color 0.4s ease;
+}
+
+.section-header:hover h2 {
+    letter-spacing: 1.5px;
+}
+
+.section-line {
+    transform-origin: center;
+    transition:
+        width 0.5s var(--motion-smooth),
+        opacity 0.3s ease;
+}
+
+.section-header:hover .section-line {
+    width: 125px;
+}
+
+
+/* =========================================================
+   2. CARDS — SUBTLE LIFT
+========================================================= */
+
+.card {
+    transition:
+        transform 0.35s var(--motion-smooth),
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-hover);
+        border-color: #d8d2c6;
+    }
+}
+
+
+/* =========================================================
+   3. BUTTONS — TACTILE FEEDBACK
+========================================================= */
+
+#searchButton,
+.primary-btn,
+.secondary-btn,
+.scroll-button {
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s var(--motion-smooth);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    #searchButton:hover,
+    .primary-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 7px 18px rgba(65, 75, 55, 0.16);
+    }
+
+    .secondary-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(100, 50, 50, 0.08);
+    }
+
+    .scroll-button:hover {
+        transform: translateY(-3px);
+    }
+}
+
+#searchButton:active,
+.primary-btn:active,
+.secondary-btn:active,
+.scroll-button:active {
+    transform: scale(0.98);
+}
+
+
+/* =========================================================
+   4. INPUTS — SOFT FOCUS
+========================================================= */
+
+input {
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease;
+}
+
+input:focus {
+    border-color: var(--sage);
+    box-shadow: 0 0 0 4px rgba(123, 135, 115, 0.12);
+}
+
+
+/* =========================================================
+   5. DESKTOP GALLERY — PHOTO HOVER
+========================================================= */
+
+.gallery-item {
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.gallery-item img,
+.gallery > img {
+    transition:
+        transform 0.7s var(--motion-smooth),
+        filter 0.5s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .gallery-item:hover img,
+    .gallery > img:hover {
+        transform: scale(1.045);
+        filter: brightness(1.03);
+    }
+}
+
+
+/* =========================================================
+   6. ACCESSIBLE KEYBOARD FOCUS
+========================================================= */
+
+button:focus-visible,
+a:focus-visible {
+    outline: 2px solid var(--olive);
+    outline-offset: 4px;
+    border-radius: 6px;
+}
+
+
+/* =========================================================
+   7. REDUCED MOTION ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s var(--motion-smooth);
+
+    transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Optional stagger for consecutive cards */
+.reveal-delay-1 {
+    --reveal-delay: 100ms;
+}
+
+.reveal-delay-2 {
+    --reveal-delay: 200ms;
+}
+
+.reveal-delay-3 {
+    --reveal-delay: 300ms;
+}

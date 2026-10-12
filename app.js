@@ -2310,3 +2310,83 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+
+
+/* =========================
+   BACK TO TOP FUNCTION
+========================= */
+
+const backToTopButton = document.getElementById("backToTop");
+
+if (backToTopButton) {
+
+    // Show the button after scrolling down
+    window.addEventListener("scroll", () => {
+
+        if (window.scrollY > 400) {
+            backToTopButton.classList.add("visible");
+        } else {
+            backToTopButton.classList.remove("visible");
+        }
+
+    }, { passive: true });
+
+    // Smoothly return to the top
+    backToTopButton.addEventListener("click", () => {
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    });
+
+}
+
+
+/* =========================================================
+   SCROLL REVEAL OBSERVER
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const revealElements = document.querySelectorAll(
+        ".section-header, .section > .card, #pageBreak"
+    );
+
+    /* Fallback for browsers without IntersectionObserver */
+    if (!("IntersectionObserver" in window)) {
+        revealElements.forEach(function (element) {
+            element.classList.add("is-visible");
+        });
+        return;
+    }
+
+    const observer = new IntersectionObserver(
+        function (entries, observer) {
+
+            entries.forEach(function (entry) {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add("is-visible");
+
+                    /* Reveal only once */
+                    observer.unobserve(entry.target);
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.12,
+            rootMargin: "0px 0px -40px 0px"
+        }
+    );
+
+    revealElements.forEach(function (element) {
+        element.classList.add("reveal");
+        observer.observe(element);
+    });
+
+});
