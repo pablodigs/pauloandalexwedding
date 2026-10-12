@@ -1612,8 +1612,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         /* ---------------------------------------------
-           SET INITIAL CARD POSITIONS
-           --------------------------------------------- */
+        SET INITIAL CARD POSITIONS
+        INSTAGRAM-STYLE LAYERED STACK
+        --------------------------------------------- */
 
         function updateStack() {
 
@@ -1635,55 +1636,67 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (relativeIndex === 0) {
 
-                    /* TOP CARD */
+                    /* TOP PHOTO */
 
                     card.style.zIndex = cards.length;
+
                     card.style.transform =
-                        "translateY(0px) scale(1)";
+                        "translate(0px, 0px) rotate(0deg) scale(1)";
+
                     card.style.opacity = "1";
                     card.style.pointerEvents = "auto";
 
                 } else if (relativeIndex === 1) {
 
-                    /* SECOND CARD */
+                    /* SECOND PHOTO — UPPER RIGHT */
 
                     card.style.zIndex = cards.length - 1;
+
                     card.style.transform =
-                        "translateY(10px) scale(0.97)";
+                        "translate(13px, -9px) rotate(5deg) scale(0.96)";
+
                     card.style.opacity = "1";
                     card.style.pointerEvents = "none";
 
                 } else if (relativeIndex === 2) {
 
-                    /* THIRD CARD */
+                    /* THIRD PHOTO — UPPER LEFT */
 
                     card.style.zIndex = cards.length - 2;
+
                     card.style.transform =
-                        "translateY(20px) scale(0.94)";
+                        "translate(-12px, 7px) rotate(-4deg) scale(0.93)";
+
                     card.style.opacity = "1";
                     card.style.pointerEvents = "none";
 
                 } else if (relativeIndex === 3) {
 
-                    /* FOURTH CARD */
+                    /* FOURTH PHOTO — LOWER RIGHT */
 
                     card.style.zIndex = cards.length - 3;
+
                     card.style.transform =
-                        "translateY(30px) scale(0.91)";
+                        "translate(8px, 17px) rotate(7deg) scale(0.90)";
+
                     card.style.opacity = "1";
                     card.style.pointerEvents = "none";
 
                 } else {
 
-                    /* CARDS DEEPER IN STACK */
+                    /* PHOTOS DEEPER IN THE STACK */
 
                     card.style.zIndex = 1;
+
                     card.style.transform =
-                        "translateY(35px) scale(0.89)";
+                        "translate(-5px, 23px) rotate(-3deg) scale(0.88)";
+
                     card.style.opacity = "0";
                     card.style.pointerEvents = "none";
                 }
+
             });
+
         }
 
 
