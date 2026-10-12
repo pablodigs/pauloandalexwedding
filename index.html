@@ -15,6 +15,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link
+    rel="preload"
+    as="image"
+    href="images/password-gate.jpg"
+    fetchpriority="high">
 </head>
 
 <body>
@@ -26,7 +31,7 @@
 
             <h2>Alex & Paulo</h2>
 
-            <p style="font-size: 14px;">Please enter the access code from your invitation.</p>
+            <p style="font-size: 12px;">Please enter the access code from your invitation.</p>
 
             <input
                 type="password"
@@ -62,7 +67,7 @@
             February 24, 2027
         </p>
         
-        <p class="hero-date">
+        <p class="hero-time">
             3:00 PM
         </p>
 
@@ -386,7 +391,7 @@
 
                     <span id="attireRole">Guests</span>
 
-                    <span id="attireCounter">1 of 7</span>
+                    <span id="attireCounter">1 of 9</span>
 
                 </div>
             </div>
@@ -416,6 +421,8 @@
             <div class="attire-dots">
 
                 <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
                 <span class="dot"></span>
                 <span class="dot"></span>
                 <span class="dot"></span>
@@ -991,6 +998,14 @@
             {
                 role: "Best Man",
                 image: "images/attire/best-man.jpg"
+            },
+            {
+                role: "Flower Girls",
+                image: "images/attire/flower-girls.jpg"
+            },
+            {
+                role: "Bearers",
+                image: "images/attire/bearers.jpg"
             }
 
         ];

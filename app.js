@@ -16,6 +16,9 @@ const passwordInput =
 const passwordError =
     document.getElementById("passwordError");
 
+document.body.classList.add("password-locked");
+window.scrollTo(0, 0);
+
 passwordButton.addEventListener("click", () => {
 
     const entered =
@@ -26,6 +29,14 @@ passwordButton.addEventListener("click", () => {
         document
             .getElementById("passwordGate")
             .style.display = "none";
+
+        document.body.classList.remove("password-locked");
+
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "instant"
+        });
 
     } else {
 
@@ -2208,7 +2219,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "keydown",
         function (event) {
 
-            if (
+            if (!lightbox ||
                 !lightbox.classList.contains("active")
             ) {
                 return;
