@@ -157,7 +157,6 @@ p {
 
     width: 170px;
 
-    margin-bottom: 30px;
 }
 
 .hero h1 {
@@ -1337,7 +1336,7 @@ footer h3 {
     }
 
     h2 {
-        font-size: 1.4rem;
+        font-size: 2.4rem;
     }
 
     .hero-monogram {
@@ -1969,7 +1968,7 @@ footer h3 {
             rgba(255, 255, 255, 0.82),
             rgba(255, 255, 255, 0.82)
         ),
-        url("images/password-gate.png");
+        url("images/password-gate.jpg");
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
@@ -2091,12 +2090,35 @@ footer h3 {
     align-items: center;
     gap: 12px;
 
-    margin-bottom: 25px;
+    margin-bottom: 0;
 
     font-family: "Cormorant Garamond", serif;
     font-size: 22px;
     letter-spacing: 1px;
 }
+
+
+.title-divider {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-align: center;
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+.title-divider::before,
+.title-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: #8a765e;
+}
+
+.title-divider span {
+    white-space: nowrap;
+}
+
 
 #attireRole {
     font-weight: 600;
