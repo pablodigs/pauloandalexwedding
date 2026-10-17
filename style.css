@@ -47,12 +47,14 @@ html {
 
 body {
 
-    background: var(--bg);
-
+    background-color: #F7F4ED;
+    background-image: url("images/wedding-background.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
     color: var(--text);
-
     font-family: 'Inter', sans-serif;
-
     line-height: 1.7;
 }
 
@@ -1317,7 +1319,7 @@ footer {
     font-family: "Aptos", serif;
     text-align: right;
     padding:
-        0px 20px;
+        5px 20px;
 
     background: var(--brown);
 
