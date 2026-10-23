@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f7f3ed">
+    <meta name="description" content="The wedding of Alex and Paulo — February 24, 2027.">
     <title>Alex & Paulo Wedding</title>
 
     <link rel="stylesheet" href="style.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,52 +49,91 @@
         </div>
     </div>
 
+
+    <!-- EDITORIAL SITE NAVIGATION -->
+    <!-- <nav class="site-nav" aria-label="Main navigation">
+        <a class="nav-wordmark" href="#top" aria-label="Alex and Paulo, back to top">A <span>&amp;</span> P</a>
+        <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open navigation">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="#aisle">The Details</a>
+            <a href="#archives">Portraits</a>
+            <a href="#attire">Attire</a>
+            <a href="#presents">Gifts</a>
+            <a href="#answers">FAQs</a>
+            <a class="nav-rsvp" href="#attendance">RSVP</a>
+        </div>
+    </nav> -->
+
     <!-- HERO -->
 
-    <header class="hero">
+    <header class="hero" id="top">
 
         <div class="hero-overlay"></div>
-<!-- 
-        <img src="images/monogram-black.png"
-             alt="Wedding Monogram"
-             class="hero-monogram"> -->
 
-        <h1>ALEX & PAULO</h1>
+        <div class="hero-copy">
+            <span class="hero-title">
+                <h1>ALEX & PAULO</h1>
+            </span>
+            
+            <p class="hero-subtitle">
+                ARE GETTING MARRIED
+            </p>
 
-        <p class="hero-subtitle">
-            ARE GETTING MARRIED
-        </p>
+            <p class="hero-date">
+                February 24, 2027
+            </p>
+            
+            <p class="hero-time">
+                3:00 PM
+            </p>
+            
+            <a href="#attendance" class="scroll-button">
+                RSVP
+            </a>
 
-        <p class="hero-date">
-            February 24, 2027
-        </p>
-        
-        <p class="hero-time">
-            3:00 PM
-        </p>
+            <p class="hero-subtext">
+                ​Always • Promise
+            </p>
 
-        <a href="#attendance" class="scroll-button">
-            RSVP
-        </a>
+        </div>
 
-        <p class="hero-subtext">
-            ​Always • Promise
-        </p>
+        <div class="countdown" aria-label="Countdown to the wedding">
+            <div class="countdown-unit"><span id="days">---</span><small>Days</small></div>
+            <span class="countdown-colon">:</span>
+            <div class="countdown-unit"><span id="hours">--</span><small>Hours</small></div>
+            <span class="countdown-colon">:</span>
+            <div class="countdown-unit"><span id="minutes">--</span><small>Minutes</small></div>
+            <span class="countdown-colon">:</span>
+            <div class="countdown-unit"><span id="seconds">--</span><small>Seconds</small></div>
+        </div>
 
     </header>
 
+
+    <section class="quick-links" aria-label="Explore the wedding website">
+        <a href="#aisle"><span class="quick-number">01</span><span class="quick-icon">⌖</span><br><span class="quick-item">Aisle &amp; Program</span><span class="quick-arrow">↗</span></a>
+        <a href="#archives"><span class="quick-number">02</span><span class="quick-icon">▧</span><br><span class="quick-item">Archives &amp; Portraits</span><span class="quick-arrow">↗</span></a>
+        <a href="#attire"><span class="quick-number">03</span><span class="quick-icon">◐</span><br><span class="quick-item">Attire &amp; Palette</span><span class="quick-arrow">↗</span></a>
+        <a href="#presents"><span class="quick-number">04</span><span class="quick-icon">⊞</span><br><span class="quick-item">Appreciation &amp; Presents</span><span class="quick-arrow">↗</span></a>
+        <a href="#attendance"><span class="quick-number">05</span><span class="quick-icon">✉</span><br><span class="quick-item">Attendance &amp; Party</span><span class="quick-arrow">↗</span></a>
+    </section>
+
     <!-- Aisle & Program -->
 
-    <section class="section">
+    <section id="aisle" class="section editorial-section">
 
         <div class="section-header">
-            <h2><span id="anp">A</span>isle <span id="anp">& P</span>rogram</h2>
+            <h2><span class="anp-initial">A</span>isle <span class="anp-initial">& P</span>rogram</h2>
             <div class="section-line"></div> 
         </div>
 
+        <div class="venue-grid">
+
         <!-- CEREMONY -->
 
-        <div class="card">
+        <div class="card venue-card">
 
             <div class="venue-info">
 
@@ -127,7 +168,7 @@
                     allowfullscreen=""
                     referrerpolicy="no-referrer-when-downgrade">
                 </iframe> -->
-                <img src = "images/venue/ceremony.jpg" id = "venue-img">
+                <img src = "images/venue/ceremony.jpg" class="venue-img">
 
             </div>
 
@@ -176,7 +217,7 @@
 
         <!-- RECEPTION -->
 
-        <div class="card">
+        <div class="card venue-card">
 
             <div class="venue-info">
 
@@ -211,7 +252,7 @@
                     allowfullscreen=""
                     referrerpolicy="no-referrer-when-downgrade">
                 </iframe> -->
-                <img src = "images/venue/reception.jpg" id = "venue-img">
+                <img src = "images/venue/reception.jpg" class="venue-img">
 
             </div>
 
@@ -257,15 +298,17 @@
 
         </div>
 
+        </div><!-- /.venue-grid -->
+
     </section>
 
 
     <!-- ARCHIVES & PORTRAITS -->
 
-    <section class="section">
+    <section id="archives" class="section editorial-section">
 
         <div class="section-header">
-            <h2><span id="anp">A</span>rchives <span id="anp">& P</span>ortraits</h2>
+            <h2><span class="anp-initial">A</span>rchives <span class="anp-initial">& P</span>ortraits</h2>
             <div class="section-line"></div>
         </div>
         <div class = "card">
@@ -274,21 +317,21 @@
             ========================= -->
             <div class="gallery">
 
-                <img src="images/gallery/gallery1.jpg" alt="">
-                <img src="images/gallery/gallery2.jpg" alt="">
-                <img src="images/gallery/gallery3.jpg" alt="">
-                <img src="images/gallery/gallery4.jpg" alt="">
-                <img src="images/gallery/gallery5.jpg" alt="">
-                <img src="images/gallery/gallery6.jpg" alt="">
-                <img src="images/gallery/gallery7.jpg" alt="">
-                <img src="images/gallery/gallery8.jpg" alt="">
-                <img src="images/gallery/gallery9.jpg" alt="">
-                <img src="images/gallery/gallery10.jpg" alt="">
-                <img src="images/gallery/gallery11.jpg" alt="">
-                <img src="images/gallery/gallery12.jpg" alt="">
-                <img src="images/gallery/gallery13.jpg" alt="">
-                <img src="images/gallery/gallery14.jpg" alt="">
-                <img src="images/gallery/gallery15.jpg" alt="">
+                <img src="images/gallery/gallery1.jpg" alt="Alex and Paulo — portrait 1" loading="lazy">
+                <img src="images/gallery/gallery2.jpg" alt="Alex and Paulo — portrait 2" loading="lazy">
+                <img src="images/gallery/gallery3.jpg" alt="Alex and Paulo — portrait 3" loading="lazy">
+                <img src="images/gallery/gallery4.jpg" alt="Alex and Paulo — portrait 4" loading="lazy">
+                <img src="images/gallery/gallery5.jpg" alt="Alex and Paulo — portrait 5" loading="lazy">
+                <img src="images/gallery/gallery6.jpg" alt="Alex and Paulo — portrait 6" loading="lazy">
+                <img src="images/gallery/gallery7.jpg" alt="Alex and Paulo — portrait 7" loading="lazy">
+                <img src="images/gallery/gallery8.jpg" alt="Alex and Paulo — portrait 8" loading="lazy">
+                <img src="images/gallery/gallery9.jpg" alt="Alex and Paulo — portrait 9" loading="lazy">
+                <img src="images/gallery/gallery10.jpg" alt="Alex and Paulo — portrait 10" loading="lazy">
+                <img src="images/gallery/gallery11.jpg" alt="Alex and Paulo — portrait 11" loading="lazy">
+                <img src="images/gallery/gallery12.jpg" alt="Alex and Paulo — portrait 12" loading="lazy">
+                <img src="images/gallery/gallery13.jpg" alt="Alex and Paulo — portrait 13" loading="lazy">
+                <img src="images/gallery/gallery14.jpg" alt="Alex and Paulo — portrait 14" loading="lazy">
+                <img src="images/gallery/gallery15.jpg" alt="Alex and Paulo — portrait 15" loading="lazy">
 
             </div>
 
@@ -300,59 +343,63 @@
                 <div class="mobile-gallery-stack">
 
                     <div class="mobile-gallery-card">
-                        <img src="images/gallery/gallery1.jpg" alt="Paulo & Alex photo 1">
+                        <img src="images/gallery/gallery1.jpg" alt="Paulo & Alex photo 1" loading="lazy" decoding="async">
                     </div>
 
                     <div class="mobile-gallery-card">
-                        <img src="images/gallery/gallery2.jpg" alt="Paulo & Alex photo 2">
+                        <img src="images/gallery/gallery2.jpg" alt="Paulo & Alex photo 2" loading="lazy" decoding="async">
                     </div>
 
                     <div class="mobile-gallery-card">
-                        <img src="images/gallery/gallery3.jpg" alt="Paulo & Alex photo 3">
+                        <img src="images/gallery/gallery3.jpg" alt="Paulo & Alex photo 3" loading="lazy" decoding="async">
                     </div>
 
                     <div class="mobile-gallery-card">
-                        <img src="images/gallery/gallery4.jpg" alt="Paulo & Alex photo 4">
+                        <img src="images/gallery/gallery4.jpg" alt="Paulo & Alex photo 4" loading="lazy" decoding="async">
                     </div>
 
                     <div class="mobile-gallery-card">
-                        <img src="images/gallery/gallery5.jpg" alt="Paulo & Alex photo 5">
+                        <img src="images/gallery/gallery5.jpg" alt="Paulo & Alex photo 5" loading="lazy" decoding="async">
                     </div>
 
                     <div class="mobile-gallery-card">
-                        <img src="images/gallery/gallery6.jpg" alt="Paulo & Alex photo 6">
+                        <img src="images/gallery/gallery6.jpg" alt="Paulo & Alex photo 6" loading="lazy" decoding="async">
                     </div>
 
                     <div class="mobile-gallery-card">
-                        <img src="images/gallery/gallery7.jpg" alt="Paulo & Alex photo 7">
+                        <img src="images/gallery/gallery7.jpg" alt="Paulo & Alex photo 7" loading="lazy" decoding="async">
                     </div>
 
                     <div class="mobile-gallery-card">
-                        <img src="images/gallery/gallery8.jpg" alt="Paulo & Alex photo 8">
+                        <img src="images/gallery/gallery8.jpg" alt="Paulo & Alex photo 8" loading="lazy" decoding="async">
                     </div>
 
                     <div class="mobile-gallery-card">
-                        <img src="images/gallery/gallery9.jpg" alt="Paulo & Alex photo 9">
+                        <img src="images/gallery/gallery9.jpg" alt="Paulo & Alex photo 9" loading="lazy" decoding="async">
                     </div>
 
                     <div class="mobile-gallery-card">
-                        <img src="images/gallery/gallery10.jpg" alt="Paulo & Alex photo 10">
+                        <img src="images/gallery/gallery10.jpg" alt="Paulo & Alex photo 10" loading="lazy" decoding="async">
                     </div>
 
                     <div class="mobile-gallery-card">
-                        <img src="images/gallery/gallery11.jpg" alt="Paulo & Alex photo 11">
+                        <img src="images/gallery/gallery11.jpg" alt="Paulo & Alex photo 11" loading="lazy" decoding="async">
                     </div>
 
                     <div class="mobile-gallery-card">
-                        <img src="images/gallery/gallery12.jpg" alt="Paulo & Alex photo 12">
+                        <img src="images/gallery/gallery12.jpg" alt="Paulo & Alex photo 12" loading="lazy" decoding="async">
                     </div>
 
                     <div class="mobile-gallery-card">
-                        <img src="images/gallery/gallery13.jpg" alt="Paulo & Alex photo 13">
+                        <img src="images/gallery/gallery13.jpg" alt="Paulo & Alex photo 13" loading="lazy" decoding="async">
                     </div>
 
                     <div class="mobile-gallery-card">
-                        <img src="images/gallery/gallery14.jpg" alt="Paulo & Alex photo 14">
+                        <img src="images/gallery/gallery14.jpg" alt="Paulo & Alex photo 14" loading="lazy" decoding="async">
+                    </div>
+
+                    <div class="mobile-gallery-card">
+                        <img src="images/gallery/gallery15.jpg" alt="Paulo & Alex photo 15" loading="lazy">
                     </div>
 
                 </div>
@@ -367,19 +414,19 @@
     </section>
 
     <!-- QUOTE -->
-    <section class="section">
+    <!-- <section class="section">
         <div  id="pageBreak" class="card">
             <p id = "quote">"Every love story is beautiful, but ours is my favorite."</p>
 
         </div>
-    </section>
+    </section> -->
 
     <!-- ATTIRE & PALETTE -->
 
-    <section class="section">
+    <section id="attire" class="section editorial-section">
 
         <div class="section-header">
-            <h2><span id="anp">A</span>ttire <span id="anp">& P</span>alette</h2>
+            <h2><span class="anp-initial">A</span>ttire <span class="anp-initial">& P</span>alette</h2>
             <div class="section-line"></div>
         </div>
 
@@ -438,7 +485,7 @@
      <!-- APPRECIATION & PRESENTS -->
     <!-- <section class="section">
         <div class="section-header">
-            <h2><span id="anp">A</span>ppreciation <span id="anp">& P</span>resents</h2>
+            <h2><span class="anp-initial">A</span>ppreciation <span class="anp-initial">& P</span>resents</h2>
             <div class="section-line"></div>
         </div>
         <div class="card">
@@ -449,12 +496,10 @@
     </section> -->
     
     <!-- APPRECIATION & PRESENTS -->
-    <section class="section gift-section">
+    <section id="presents" class="section gift-section editorial-section">
 
         <div class="section-header">
-            <h2>
-                <h2><span id="anp">A</span>ppreciation <span id="anp">& P</span>resents
-            </h2>
+            <h2><span class="anp-initial">A</span>ppreciation <span class="anp-initial">&amp; P</span>resents</h2>
             <div class="section-line"></div>
         </div>
 
@@ -462,7 +507,7 @@
 
             <div class="gift-image">
                 <img
-                    src="images/gift-guide.jpg"
+                    src="images/gift-guide.png"
                     alt="A gift illustration"
                 >
             </div>
@@ -474,8 +519,6 @@
                 </span>
 
                 <h3>Gift Guide</h3>
-
-                <div class="gift-divider"></div>
 
                 <p>
                     As we begin this new chapter of our lives together,
@@ -497,60 +540,63 @@
 
     <!-- ANSWERS & PREPARATIONS -->
 
-    <section class="section">
+    <section id="answers" class="section editorial-section">
 
         <div class="section-header">
-            <h2><span id="anp">A</span>nswers <span id="anp">& P</span>reparations</h2>
+            <h2><span class="anp-initial">A</span>nswers <span class="anp-initial">& P</span>reparations</h2>
             <div class="section-line"></div>
         </div>
 
         <div class="faq">
-
-            <div class="faq-item">
-                <h4>When should I RSVP by?</h4>
-                <p>
+            <details class="faq-item">
+                <summary>When should I RSVP by?</summary>
+                <div class="faq-answer">
+                    <p>
                     We kindly ask that you submit your RSVP by <u>November 30, 2026.</u> <br>
                     Final guest counts must be provided to our venue and suppliers shortly after this date, so any invitations without a response by then will be marked as unable to attend.
                     <br>We hope you'll be celebrating with us, but we completely understand if you're unable to join.
                 </p>
-            </div>
+                </div>
+            </details>
 
-            <div class="faq-item">
-                <h4>Can I bring a plus-one?</h4>
-                <p>
+            <details class="faq-item">
+                <summary>Can I bring a plus-one?</summary>
+                <div class="faq-answer">
+                    <p>
                     To help us keep the celebration intimate and comfortable for everyone, we are only able to accommodate the guests included in each invitation. <br>You may check the number of reserved seats under the Attendance & Party section of this website. If a guest is included in your reservation, there will already be a seat reserved for them.
                 </p>
-            </div>
+                </div>
+            </details>
 
-            <div class="faq-item">
-                <h4>Can I bring children?</h4>
-                <p>
+            <details class="faq-item">
+                <summary>Can I bring children?</summary>
+                <div class="faq-answer">
+                    <p>
                     While we adore your little ones, our wedding celebration will be an adults-only occasion.
                     <br>We hope this gives everyone the opportunity to relax, enjoy the evening, and celebrate with us without any additional responsibilities. Thank you for your understanding.
                 </p>
-            </div>
+                </div>
+            </details>
 
-            <div class="faq-item">
-                <h4>Is parking available?</h4>
-                <p>
+            <details class="faq-item">
+                <summary>Is parking available?</summary>
+                <div class="faq-answer">
+                    <p>
                     Yes. Both the ceremony and reception venues have designated parking areas available for guests. <br>
                     Parking spaces are limited, so if you're able to carpool or share a ride with family and friends, we'd greatly appreciate it.
                 </p>
-            </div>
+                </div>
+            </details>
 
-            <div class="faq-item">
-                <h4>What happens if I can no longer attend after RSVP-ing?</h4>
-                <p>
+            <details class="faq-item">
+                <summary>What happens if I can no longer attend after RSVP-ing?</summary>
+                <div class="faq-answer">
+                    <p>
                     We understand that plans can change. If you're no longer able to attend after submitting your RSVP, please let us know as soon as possible so we can update our arrangements accordingly.
                 </p>
-            </div>
+                </div>
+            </details>
 
-            <!-- <div class="faq-item">
-                <h4>What should I bring as a gift?</h4>
-                <p>
-                    Your presence at our wedding is the greatest gift of all! If you wish to give something, a monetary contribution toward our future would be deeply appreciated.
-                </p>
-            </div> -->
 
         </div>
 
@@ -562,7 +608,7 @@
     <section id="attendance" class="section rsvp-section">
 
         <div class="section-header">
-            <h2><span id="anp">A</span>ttendance <span id="anp">& P</span>arty</h2>
+            <h2><span class="anp-initial">A</span>ttendance <span class="anp-initial">& P</span>arty</h2>
             <div class="section-line"></div>
 
             <p class="section-intro">
@@ -573,7 +619,7 @@
 
         <!-- STEP 1 -->
 
-        <div class="card rsvp-card">
+        <div id="searchCard" class="card rsvp-card">
 
             <div class="step-number">01</div>
 
@@ -702,23 +748,7 @@
     <!-- FOOTER -->
 
     <footer>
-
-        <!-- <img
-            src="images/monogram-black.png"
-            alt="Wedding Monogram"
-            class="footer-monogram">
-
-        <p>
-            With love,
-        </p>
-
-        <h3>
-            Alex & Paulo
-        </h3> -->
-        <p style="color: white;">
-            © Alex & Paulo 2026
-        </p>
-
+        <p class="footer-copyright">© Alex &amp; Paulo · 2027</p>
     </footer>
 
     <!-- REMOVE GUEST CONFIRMATION MODAL -->
@@ -972,12 +1002,12 @@
 
             {
                 role: "Principal Sponsors",
-                image: "images/attire/principal-sponsors.jpg"
+                image: "images/attire/principal-sponsors.png"
             },
 
             {
                 role: "Parents",
-                image: "images/attire/parents.jpg"
+                image: "images/attire/parents.png"
             },
 
             {
@@ -987,25 +1017,25 @@
 
             {
                 role: "Maid of Honor",
-                image: "images/attire/maid-of-honor.jpg"
+                image: "images/attire/maid-of-honor.png"
             },
 
             {
                 role: "Groomsmen",
-                image: "images/attire/groomsmen.jpg"
+                image: "images/attire/groomsmen.png"
             },
 
             {
                 role: "Best Man",
-                image: "images/attire/best-man.jpg"
+                image: "images/attire/best-man.png"
             },
             {
                 role: "Flower Girls",
-                image: "images/attire/flower-girls.jpg"
+                image: "images/attire/flower-girls.png"
             },
             {
                 role: "Bearers",
-                image: "images/attire/bearers.jpg"
+                image: "images/attire/bearers.png"
             }
 
         ];

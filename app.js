@@ -211,53 +211,6 @@ rsvpSuccessOverlay.addEventListener(
     }
 );
 
-// =========================
-// HELPERS
-// =========================
-
-// async function sendRSVPNotification(
-//     status,
-//     message = ""
-// ) {
-
-//     const params = {
-
-//         guest_name:
-//             `${currentGuest.firstName} ${currentGuest.lastName}`,
-
-//         status,
-
-//         reserved_seats:
-//             currentGuest.reservedSeats,
-
-//         confirmed_seats:
-//             currentGuest.seats,
-
-//         guest2:
-//             currentGuest.guest2 || "None",
-
-//         guest3:
-//             currentGuest.guest3 || "None",
-
-//         guest_email:
-//             currentGuest.email || "",
-
-//         message
-//     };
-
-//     try {
-
-//         await emailjs.send(
-//             "service_w85dgwi",
-//             "template_5zn2xdp",
-//             params
-//         );
-
-//     } catch (error) {
-
-//         console.error(error);
-//     }
-// }
 
 async function sendGuestConfirmation(
     status,
@@ -490,6 +443,10 @@ searchButton.addEventListener(
                 .toLowerCase();
 
         if (!searchText) {
+            searchButton.disabled = false;
+            searchButton.classList.remove("loading");
+            searchButton.innerHTML = `<span class="button-text">Find My Invitation</span>`;
+            searchInput.focus();
             return;
         }
 
@@ -514,6 +471,9 @@ searchButton.addEventListener(
 
         if (error) {
             alert(error.message);
+            searchButton.disabled = false;
+            searchButton.classList.remove("loading");
+            searchButton.innerHTML = `<span class="button-text">Find My Invitation</span>`;
             return;
         }
 
@@ -2007,7 +1967,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-                openLightbox(index);
+                // Reuse the actual lightbox in index.html; the legacy
+                // galleryLightbox IDs are not present in this version.
+                const desktopImage = document.querySelectorAll(".gallery img")[index];
+                if (desktopImage) desktopImage.click();
             });
 
         });
@@ -2400,4 +2363,63 @@ document.addEventListener("DOMContentLoaded", function () {
         observer.observe(element);
     });
 
+});
+
+
+/* =========================================================
+   EDITORIAL NAVIGATION + WEDDING COUNTDOWN
+========================================================= */
+document.addEventListener("DOMContentLoaded", function () {
+    const toggle = document.getElementById("navToggle");
+    const links = document.getElementById("navLinks");
+
+    if (toggle && links) {
+        toggle.addEventListener("click", function () {
+            const isOpen = links.classList.toggle("open");
+            toggle.setAttribute("aria-expanded", String(isOpen));
+            toggle.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
+            toggle.classList.toggle("is-open", isOpen);
+        });
+
+        links.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", function () {
+                links.classList.remove("open");
+                toggle.classList.remove("is-open");
+                toggle.setAttribute("aria-expanded", "false");
+                toggle.setAttribute("aria-label", "Open navigation");
+            });
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                links.classList.remove("open");
+                toggle.classList.remove("is-open");
+                toggle.setAttribute("aria-expanded", "false");
+            }
+        });
+    }
+
+    const weddingDate = new Date("2027-02-24T15:00:00+08:00").getTime();
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+
+    function updateCountdown() {
+        if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+        const distance = weddingDate - Date.now();
+        if (distance <= 0) {
+            daysEl.textContent = "00";
+            hoursEl.textContent = "00";
+            minutesEl.textContent = "00";
+            secondsEl.textContent = "00";
+            return;
+        }
+        daysEl.textContent = String(Math.floor(distance / 86400000)).padStart(2, "0");
+        hoursEl.textContent = String(Math.floor((distance % 86400000) / 3600000)).padStart(2, "0");
+        minutesEl.textContent = String(Math.floor((distance % 3600000) / 60000)).padStart(2, "0");
+        secondsEl.textContent = String(Math.floor((distance % 60000) / 1000)).padStart(2, "0");
+    }
+    updateCountdown();
+    window.setInterval(updateCountdown, 1000);
 });
