@@ -53,7 +53,7 @@ body {
     background-position: center center;
     background-size: cover;
     background-attachment: fixed;
-    color: var(--text);
+    color: var(--ink);
     font-family: 'Inter', sans-serif;
     line-height: 1.7;
 }
@@ -101,7 +101,7 @@ h4 {
 
 p {
 
-    color: var(--text);
+    color: var(--ink);
 }
 
 #anp {
@@ -140,7 +140,7 @@ p {
 
 .hero-copy {
   max-width: 500px;
-  margin: 12px;
+  margin: 12px 12px 12px 50px;
   text-align: left;
 }
 
@@ -760,8 +760,6 @@ button {
 
         object-fit: cover;
 
-        border-radius: 16px;
-
         /*
            Prevent the browser from treating the image
            itself as a draggable object.
@@ -1320,6 +1318,10 @@ footer h3 {
 
     .hero-monogram {
         width: 120px;
+    }
+
+    .hero-copy {
+        margin: 12px !important;
     }
 
     .guest-row {
@@ -2897,7 +2899,6 @@ a:focus-visible {
 :root {
     --bg: #f7f3ed;
     --card: #fffdf9;
-    --text: #302b26;
     --muted: #766d63;
     --border: #ded4c8;
     --sage: #7b8773;
@@ -3068,6 +3069,7 @@ p {
     padding: 100px 24px 82px;
     gap: 0;
     text-align: center;
+    position: relative;
     isolation: isolate;
     overflow: hidden;
     background-image: linear-gradient(180deg, rgba(24, 21, 18, .25), rgba(24, 21, 18, .50)), url("images/hero-background.jpg");
@@ -3187,7 +3189,7 @@ p {
     margin: -1px auto 0;
     padding: 0 clamp(20px, 4vw, 54px);
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     background: var(--paper-deep);
     border-bottom: 1px solid var(--line);
 }
@@ -3338,9 +3340,7 @@ input:focus {
     box-shadow: 0 0 0 3px rgba(140, 121, 98, .1);
 }
 
-button,
-.primary-btn,
-.secondary-btn {
+button {
     border-radius: 0;
     letter-spacing: .08em;
 }
@@ -3348,8 +3348,9 @@ button,
 .primary-btn,
 #searchButton,
 #confirmButton {
-    background: var(--ink);
+    background: var(--brown);
     color: #fffdf9;
+    letter-spacing: .08em;
 }
 
 .primary-btn:hover,
@@ -3360,6 +3361,7 @@ button,
 
 .secondary-btn {
     border: 1px solid var(--line);
+    letter-spacing: .08em;
 }
 
 .rsvp-section {
@@ -3411,12 +3413,7 @@ button,
 }
 
 .mobile-gallery-card {
-    border-radius: 2px;
     overflow: hidden;
-}
-
-.mobile-gallery-card img {
-    border-radius: 2px;
 }
 
 .mobile-gallery-hint {
@@ -3468,13 +3465,13 @@ button,
 .attire-next {
     background: transparent;
     border: 1px solid var(--line);
-    color: var(--ink);
+    color: var(--brown);
     width: 42px;
 }
 
 .attire-prev:hover,
 .attire-next:hover {
-    background: var(--ink);
+    background: var(--brown);
     color: white;
 }
 
@@ -3531,13 +3528,12 @@ button,
 }
 
 footer {
-    background: #302b26;
-    text-align: center;
+    background: var(--brown);
+    text-align: right;
     color: var(--paper);
 }
 
 .footer-copyright {
-    margin-top: 12px;
     color: rgba(247, 243, 237, .52);
     font-size: .65rem;
     letter-spacing: .12em;
@@ -3637,10 +3633,6 @@ footer {
         border-left: 1px solid rgba(140, 121, 98, .2);
     }
 
-    .quick-links a:last-child {
-        grid-column: 1 / -1;
-    }
-
     .hero {
         min-height: min(780px, calc(100vh - 68px));
         padding: 78px 24px 64px;
@@ -3661,7 +3653,6 @@ footer {
     }
 
     .hero {
-        min-height: 78svh;
         min-height: 78vh;
         background-position: center;
         padding: 62px 22px 54px;
@@ -3684,7 +3675,7 @@ footer {
 
     .countdown {
         gap: 7px;
-        margin-top: 22px;
+        margin-top: 122px;
     }
 
     .countdown-unit {
@@ -4183,7 +4174,7 @@ footer {
 }
 
 #answers .faq-item summary::before {
-    content: "▶";
+    content: ">";
     display: inline-block;
     margin-right: 12px;
     font-family: Arial, sans-serif;
@@ -4252,7 +4243,6 @@ footer {
 
 #attendance>.action-buttons {
     grid-column: 1 / -1;
-    display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
@@ -4508,5 +4498,308 @@ footer {
     #archives .mobile-gallery-card img {
         transition: none !important;
         animation: none !important;
+    }
+}
+
+
+/* =====================================================
+   PRENUP PHOTO + QUOTE INTERLUDE
+   Alex & Paulo Wedding Website
+   ===================================================== */
+
+.prenup-interlude {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: #f4eee3;
+    color: #30382c;
+}
+
+/* PRENUP PHOTOGRAPH */
+
+.prenup-photo-wrap {
+    position: relative;
+    width: 100%;
+    height: clamp(320px, 58vw, 690px);
+    overflow: hidden;
+    isolation: isolate;
+    background-color: #d9d0c1;
+}
+
+.prenup-photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 48%;
+    filter: saturate(0.78) contrast(0.96);
+}
+
+/* Subtle cinematic shading */
+
+.prenup-photo-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+        to bottom,
+        rgba(27, 29, 23, 0.04) 35%,
+        rgba(27, 29, 23, 0.30) 100%
+    );
+}
+
+/* Small photo caption */
+
+.photo-caption {
+    position: absolute;
+    z-index: 2;
+    left: clamp(22px, 6vw, 80px);
+    bottom: 26px;
+    color: #fffaf0;
+    font-family: "Inter", sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+}
+
+/* QUOTE AREA */
+
+.prenup-quote {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(60px, 8vw, 100px) 24px;
+    text-align: center;
+
+    background-color: #f4eee3;
+    background-image:
+        radial-gradient(
+            ellipse at 15% 20%,
+            rgba(150, 133, 103, 0.055),
+            transparent 55%
+        ),
+        radial-gradient(
+            ellipse at 85% 80%,
+            rgba(150, 133, 103, 0.045),
+            transparent 55%
+        );
+}
+
+/* Small uppercase eyebrow */
+
+.quote-eyebrow {
+    margin: 0 0 23px;
+    font-family: "Inter", sans-serif;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    line-height: 1.8;
+    color: #817a61;
+}
+
+/* Main quote */
+
+.quote-heading {
+    max-width: 850px;
+    margin: 0;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(29px, 4.2vw, 54px);
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #30382c;
+}
+
+/* Script signature */
+
+.quote-signature {
+    margin: 20px 0 0;
+    font-family: "Pinyon Script", cursive;
+    font-size: clamp(30px, 4vw, 43px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: #817a61;
+}
+
+.quote-signature span {
+    display: inline-block;
+    padding: 0 8px;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 0.7em;
+}
+
+/* Botanical divider */
+
+.quote-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: min(250px, 70%);
+    color: #858367;
+}
+
+.quote-ornament-top {
+    margin-bottom: 27px;
+}
+
+.quote-ornament-bottom {
+    margin-top: 28px;
+}
+
+.ornament-line {
+    display: block;
+    width: 55px;
+    height: 1px;
+    background-color: rgba(129, 122, 97, 0.5);
+}
+
+.ornament-leaf {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
+    line-height: 1;
+}
+
+.ornament-leaf img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+/* Subtle transition into the next section */
+
+.prenup-interlude::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(129, 122, 97, 0.32),
+        transparent
+    );
+}
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 600px) {
+    .prenup-photo-wrap {
+        height: 62vh;
+        min-height: 330px;
+        max-height: 520px;
+    }
+
+    .prenup-photo {
+        object-position: center center;
+    }
+
+    .photo-caption {
+        left: 22px;
+        bottom: 20px;
+        font-size: 9px;
+    }
+
+    .prenup-quote {
+        padding: 56px 22px 60px;
+    }
+
+    .quote-eyebrow {
+        max-width: 260px;
+        margin-bottom: 20px;
+        font-size: 8px;
+        letter-spacing: 0.19em;
+    }
+
+    .quote-heading {
+        font-size: clamp(25px, 7vw, 34px);
+        line-height: 1.6;
+        letter-spacing: 0.10em;
+    }
+
+    .desktop-break {
+        display: none;
+    }
+
+    .quote-signature {
+        margin-top: 19px;
+        font-size: 34px;
+    }
+
+    .quote-ornament-top {
+        margin-bottom: 23px;
+    }
+
+    .quote-ornament-bottom {
+        margin-top: 25px;
+    }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .prenup-photo {
+        transition: none;
+    }
+}
+
+
+/* Watercolor / hand-sketched photo edges */
+
+.prenup-artwork {
+    position: relative;
+    width: min(100% - 40px, 760px);
+    margin: 35px auto 20px;
+    aspect-ratio: 4 / 3;
+    isolation: isolate;
+}
+
+.prenup-photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    /* The mask creates the irregular painted outline */
+    -webkit-mask-image: url("images/watercolor-mask.png");
+    mask-image: url("images/watercolor-mask.png");
+
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+
+    -webkit-mask-mode: alpha;
+    mask-mode: alpha;
+}
+
+/* Optional subtle paper-like finish */
+.prenup-artwork::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: rgba(232, 221, 201, 0.06);
+}
+
+@media (max-width: 600px) {
+    .prenup-artwork {
+        width: calc(100% - 28px);
+        aspect-ratio: 4 / 3;
+        margin-top: 22px;
+        margin-bottom: 12px;
     }
 }
