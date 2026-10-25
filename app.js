@@ -1,49 +1,59 @@
 
 //    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhodGNzemF0bmZtbnFqdHJqd2hoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMzE0MjUsImV4cCI6MjEwNjYwNzQyNX0.SiNVD3vDqt5sf_folcO1SKp9Hy46NMAIXI3fBT-Z0Kk";
 
-// =========================
-// PASSWORD PROTECT
-// =========================
 
-const SITE_PASSWORD = "pablodigs";
+/* =========================================
+   WEDDING INVITATION ENVELOPE
+   ========================================= */
 
-const passwordButton =
-    document.getElementById("passwordButton");
+const invitationGate = document.getElementById("invitationGate");
+const invitationEnvelope = document.getElementById("invitationEnvelope");
+const openInvitationButton = document.getElementById("openInvitation");
+const invitationHint = document.getElementById("invitationHint");
 
-const passwordInput =
-    document.getElementById("passwordInput");
+let invitationOpened = false;
 
-const passwordError =
-    document.getElementById("passwordError");
-
+// Lock scrolling while the invitation is on screen
 document.body.classList.add("password-locked");
 window.scrollTo(0, 0);
 
-passwordButton.addEventListener("click", () => {
+// Open the invitation
+openInvitationButton.addEventListener("click", function () {
 
-    const entered =
-        passwordInput.value.trim();
+    // Prevent repeated clicks during the animation
+    if (invitationOpened) return;
 
-    if (entered === SITE_PASSWORD) {
+    invitationOpened = true;
+    openInvitationButton.disabled = true;
 
-        document
-            .getElementById("passwordGate")
-            .style.display = "none";
+    invitationGate.classList.add("is-opening");
 
+    invitationHint.textContent = "With love, Alex & Paulo";
+
+    // Allow the envelope and letter animation to play
+    setTimeout(function () {
+
+        // Fade away the invitation overlay
+        invitationGate.classList.add("invitation-dismissed");
+
+        // Reveal the existing website and restore scrolling
         document.body.classList.remove("password-locked");
 
         window.scrollTo({
             top: 0,
             left: 0,
-            behavior: "instant"
+            behavior: "auto"
         });
 
-    } else {
+        // Remove the overlay after its fade-out
+        setTimeout(function () {
+            invitationGate.style.display = "none";
+        }, 850);
 
-        passwordError.textContent =
-            "Incorrect access code.";
-    }
+    }, 1500);
+
 });
+
 
 // =========================
 // SUPABASE
@@ -1542,13 +1552,6 @@ searchInput.addEventListener("keydown", event => {
     }
 });
 
-passwordInput.addEventListener("keydown", event => {
-
-    if (event.key === "Enter") {
-
-        passwordButton.click();
-    }
-});
 
 /* =========================================================
    WEDDING GALLERY

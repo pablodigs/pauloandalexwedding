@@ -22,35 +22,85 @@
     as="image"
     href="images/password-gate.jpg"
     fetchpriority="high">
+
+    <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap"
+    rel="stylesheet"/>
 </head>
 
 <body>
+    
+    <!-- WEDDING INVITATION GATE -->
+    <div id="invitationGate" role="dialog" aria-modal="true" aria-label="Wedding invitation">
+        <div class="invitation-scene">
 
-    <!-- PASSWORD GATE -->
-    <div id="passwordGate">
-        <div class="password-box">
-            <img src="images/monogram-black.png"
-             alt="Wedding Monogram"
-             class="hero-monogram">
+            <p class="invitation-eyebrow">A SPECIAL INVITATION</p>
 
-            <h2>Alex & Paulo</h2>
+            <h1 class="invitation-heading">You're cordially invited</h1>
 
-            <p style="font-size: 12px;">Please enter the access code from your invitation.</p>
+            <p class="invitation-intro">
+                To celebrate the beginning of our forever
+            </p>
 
-            <input
-                type="password"
-                id="passwordInput"
-                placeholder="Access Code">
+            <!-- ENVELOPE -->
+            <div class="envelope" id="invitationEnvelope">
 
-            <button class="primary-btn" id="passwordButton">
-                Enter
-            </button>
+                <!-- Invitation card revealed when envelope opens -->
+                <div class="envelope-letter">
+                    <img
+                        src="images/monogram-black.png"
+                        alt="Alex and Paulo monogram"
+                        class="invitation-monogram"
+                    >
 
-            <p id="passwordError"></p>
+                    <p class="letter-small">THE WEDDING OF</p>
+
+                    <h2>Alex <span>&</span> Paulo</h2>
+
+                    <div class="letter-divider">
+                        <span>✦</span>
+                    </div>
+
+                    <p class="letter-date">FEBRUARY 24, 2027</p>
+
+                    <p class="letter-message">
+                        With joyful hearts, we invite you to share in
+                        the beginning of our forever.
+                    </p>
+
+                    <span class="letter-signature">Always • Promise</span>
+                </div>
+
+                <!-- Envelope back -->
+                <div class="envelope-back"></div>
+
+                <!-- Envelope front folds -->
+                <div class="envelope-pocket"></div>
+
+                <!-- Envelope flap -->
+                <div class="envelope-flap"></div>
+
+                <!-- Clickable wax seal -->
+                <button
+                    type="button"
+                    class="wax-seal"
+                    id="openInvitation"
+                    aria-label="Open your wedding invitation"
+                >
+                    <span class="wax-monogram"><img src="images/monogram-white.png" style="height: 35px; width: 35px;"></span>
+                    <span class="wax-label">OPEN</span>
+                </button>
+
+            </div>
+
+            <p class="invitation-hint" id="invitationHint">
+                Open your invitation
+            </p>
+
+            <p class="invitation-footer">ALEX & PAULO · ALWAYS • PROMISE</p>
 
         </div>
     </div>
-
 
     <!-- EDITORIAL SITE NAVIGATION -->
     <!-- <nav class="site-nav" aria-label="Main navigation">
@@ -115,12 +165,159 @@
 
 
     <section class="quick-links" aria-label="Explore the wedding website">
-        <a href="#aisle"><span class="quick-number"></span><span class="quick-icon">⌖</span><br><span class="quick-item">Aisle &amp; Program</span></a>
+        <!-- <a href="#aisle"><span class="quick-number"></span><span class="quick-icon">⌖</span><br><span class="quick-item">Aisle &amp; Program</span></a>
         <a href="#archives"><span class="quick-number"></span><span class="quick-icon">▧</span><br><span class="quick-item">Archives &amp; Portraits</span></a>
         <a href="#attire"><span class="quick-number"></span><span class="quick-icon">◐</span><br><span class="quick-item">Attire &amp; Palette</span></a>
         <a href="#presents"><span class="quick-number"></span><span class="quick-icon">⊞</span><br><span class="quick-item">Appreciation &amp; Presents</span></a>
         <a href="#answers"><span class="quick-number"></span><span class="quick-icon">？</span><br><span class="quick-item">Answers &amp; Preparations</span></a>
-        <a href="#attendance"><span class="quick-number"></span><span class="quick-icon">☑</span><br><span class="quick-item">Attendance &amp; Party</span></a>
+        <a href="#attendance"><span class="quick-number"></span><span class="quick-icon">☑</span><br><span class="quick-item">Attendance &amp; Party</span></a> -->
+        
+        <!-- Aisle & Program Button -->
+        <a href="#aisle" class="menu-item">
+            <svg
+                class="menu-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1"
+                stroke-linecap="square"
+                stroke-linejoin="miter"
+                aria-hidden="true"
+            >
+                <path d="M3 21h18" />
+                <path d="M5 21V8l7-5 7 5v13" />
+                <path d="M9 21v-5h6v5" />
+                <path d="M9 10h.01" />
+                <path d="M15 10h.01" />
+                <path d="M12 8v3" />
+            </svg>
+            <span>Aisle &amp; Program</span>
+        </a>
+
+                
+        <!-- Archives & Portraits Button -->
+        <a href="#archives" class="menu-item">
+            <svg
+                class="menu-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1"
+                stroke-linecap="square"
+                stroke-linejoin="miter"
+                aria-hidden="true"
+            >
+                <rect x="3" y="3" width="18" height="18" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <path d="m21 15-5-5L5 21" />
+                <path d="m14 21 4-4 3 3" />
+            </svg>
+            <span>Archives &amp; Portraits</span>
+        </a>
+
+        
+        <!-- Attire & Palette Button -->
+        <a href="#attire" class="menu-item">
+            <svg
+                class="menu-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1"
+                stroke-linecap="square"
+                stroke-linejoin="miter"
+                aria-hidden="true"
+            >
+                <path d="M16 3l5 4-3 4-2-2v12H8V9L6 11 3 7l5-4 4 3 4-3z" />
+                <path d="M10 6l2 2 2-2" />
+                <path d="M8 21h8" />
+            </svg>
+            <span>Attire &amp; Palette</span>
+        </a>
+
+        <!-- Appreciation & Presents Button -->
+        <a href="#presents" class="menu-item">
+        <svg
+            class="menu-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1"
+            stroke-linecap="square"
+            stroke-linejoin="miter"
+            aria-hidden="true"
+        >
+            <rect x="3" y="9" width="18" height="12" />
+            <path d="M2 5h20v4H2z" />
+            <path d="M12 5v16" />
+            <path d="M12 5H8.5a2.5 2.5 0 1 1 2.5-2.5V5" />
+            <path d="M12 5h3.5a2.5 2.5 0 1 0-2.5-2.5V5" />
+        </svg>
+        <span>Appreciation &amp; Presents</span>
+        </a>
+
+        
+        <!-- Answers & Preparations Button -->
+        <a href="#answers" class="menu-item">
+            <svg
+                class="menu-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1"
+                stroke-linecap="square"
+                stroke-linejoin="miter"
+                aria-hidden="true"
+            >
+                <path d="M12 3a9 9 0 1 0 9 9" />
+                <path d="M12 7a3 3 0 0 1 3 3c0 2-3 2-3 5" />
+                <path d="M12 18h.01" />
+                <path d="M15 3h6v6" />
+                <path d="M21 3l-5 5" />
+            </svg>
+            <span>Answers &amp; Preparations</span>
+        </a>
+       
+        <!-- Attendance & Party Button -->
+        <a href="#attendance" class="menu-item">
+            <svg
+                class="menu-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1"
+                stroke-linecap="square"
+                stroke-linejoin="miter"
+                aria-hidden="true"
+            >
+                <rect x="4" y="3" width="16" height="18" />
+                <path d="M9 3V2h6v1" />
+                <path d="M7 8l1.5 1.5L11 7" />
+                <path d="M13 9h4" />
+                <path d="M7 14l1.5 1.5L11 13" />
+                <path d="M13 15h4" />
+                <path d="M7 19h10" />
+            </svg>
+            <span>Attendance &amp; Party</span>
+        </a>
     </section>
     
     <!-- PRENUP QUOTE INTERLUDE -->
@@ -208,13 +405,6 @@
             </div>
 
             <div class="map-container">
-
-                <!-- <iframe
-                    src="https://www.google.com/maps?q=Diocesan+Shrine+and+Parish+of+Saint+Pio+of+Pietrelcina,+Antipolo&output=embed"
-                    loading="lazy"
-                    allowfullscreen=""
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe> -->
                 <img src = "images/venue/ceremony.jpg" class="venue-img">
 
             </div>
@@ -292,15 +482,7 @@
             </div>
 
             <div class="map-container">
-
-                <!-- <iframe
-                    src="https://www.google.com/maps?q=LeBlanc+Hotel+and+Resort,+Antipolo&output=embed"
-                    loading="lazy"
-                    allowfullscreen=""
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe> -->
                 <img src = "images/venue/reception.jpg" class="venue-img">
-
             </div>
 
             <div class="navigation">
@@ -345,7 +527,8 @@
 
         </div>
 
-        </div><!-- /.venue-grid -->
+        </div>
+        <!-- /.venue-grid -->
 
     </section>
 
@@ -454,6 +637,25 @@
                         <img src="images/gallery/gallery15.jpg" alt="Paulo & Alex photo 15" loading="lazy">
                     </div>
 
+                    <div class="mobile-gallery-card">
+                        <img src="images/gallery/gallery16.jpg" alt="Paulo & Alex photo 15" loading="lazy">
+                    </div>
+
+                    <div class="mobile-gallery-card">
+                        <img src="images/gallery/gallery17.jpg" alt="Paulo & Alex photo 15" loading="lazy">
+                    </div>
+
+                    <div class="mobile-gallery-card">
+                        <img src="images/gallery/gallery18.jpg" alt="Paulo & Alex photo 15" loading="lazy">
+                    </div>
+
+                    <div class="mobile-gallery-card">
+                        <img src="images/gallery/gallery19.jpg" alt="Paulo & Alex photo 15" loading="lazy">
+                    </div>
+
+                    <div class="mobile-gallery-card">
+                        <img src="images/gallery/gallery20.jpg" alt="Paulo & Alex photo 15" loading="lazy">
+                    </div>
                 </div>
 
                 <p class="mobile-gallery-hint">
@@ -464,14 +666,6 @@
         </div>
 
     </section>
-
-    <!-- QUOTE -->
-    <!-- <section class="section">
-        <div  id="pageBreak" class="card">
-            <p id = "quote">"Every love story is beautiful, but ours is my favorite."</p>
-
-        </div>
-    </section> -->
 
     <!-- ATTIRE & PALETTE -->
 
@@ -500,7 +694,7 @@
                 <button class="attire-prev">
                     &#10094;
                 </button>
-
+                
                 <div class="attire-content">
 
                     <img
@@ -509,7 +703,12 @@
                         alt="Attire Guide"
                     >
 
+                    <div class="attire-description" id="attireDescription">
+                        <!-- JavaScript inserts one or two descriptions here -->
+                    </div>
+
                 </div>
+
 
                 <button class="attire-next">
                     &#10095;
@@ -631,11 +830,29 @@
             </details> -->
 
             <details class="faq-item">
+                <summary>What if I have dietary restrictions or food allergies? </summary>
+                <div class="faq-answer">
+                    <p>
+                    Please let us know when you RSVP so we can accommodate your needs.
+                </p>
+                </div>
+            </details>
+
+            <details class="faq-item">
                 <summary>Is parking available?</summary>
                 <div class="faq-answer">
                     <p>
                     Yes. Both the ceremony and reception venues have designated parking areas available for guests. <br>
                     Parking spaces are limited, so if you're able to carpool or share a ride with family and friends, we'd greatly appreciate it.
+                </p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>What should I wear?</summary>
+                <div class="faq-answer">
+                    <p>
+                         Our dress code is strictly formal. Please see our <a href="#attire">Attire & Palette section</a> for inspiration.
                 </p>
                 </div>
             </details>
@@ -1049,49 +1266,116 @@
 
             {
                 role: "Guests",
-                image: "images/attire/guests.png"
+                image: "images/attire/guests.png",
+                descriptions: [
+                    {
+                        title: "Female Guests",
+                        text: "Beige formal long dress"
+                    },
+                    {
+                        title: "Male Guests",
+                        text: "Beige formal long-sleeved shirt with brown pants"
+                    }
+                ]
             },
 
             {
                 role: "Principal Sponsors",
-                image: "images/attire/principal-sponsors.png"
+                image: "images/attire/principal-sponsors.png",
+                descriptions: [
+                    {
+                        title: "Female Principal Sponsor",
+                        text: "Champagne Filipiniana formal dress"
+                    },
+                    {
+                        title: "Male Principal Sponsor",
+                        text: "Barong with khaki pants"
+                    }
+                ]
             },
 
             {
                 role: "Parents",
-                image: "images/attire/parents.png"
+                image: "images/attire/parents.png",
+                descriptions: [
+                    {
+                        title: "Mother",
+                        text: "Brown Filipiniana formal dress"
+                    },
+                    {
+                        title: "Father",
+                        text: "Barong with brown pants"
+                    }
+                ]
             },
 
             {
                 role: "Bridesmaids",
-                image: "images/attire/bridesmaids.png"
+                image: "images/attire/bridesmaids.png",
+                descriptions: [
+                    {
+                        title: "Bridesmaids",
+                        text: "Sage green formal dresses"
+                    }
+                ]
             },
 
             {
                 role: "Maid of Honor",
-                image: "images/attire/maid-of-honor.png"
+                image: "images/attire/maid-of-honor.png",
+                descriptions: [
+                    {
+                        title: "Maid of Honor",
+                        text: "Olive green formal dress"
+                    }
+                ]
             },
 
             {
                 role: "Groomsmen",
-                image: "images/attire/groomsmen.png"
+                image: "images/attire/groomsmen.png",
+                descriptions: [
+                    {
+                        title: "Groomsmen",
+                        text: "Barong with sage green pants"
+                    }
+                ]
             },
 
             {
                 role: "Best Man",
-                image: "images/attire/best-man.png"
+                image: "images/attire/best-man.png",
+                descriptions: [
+                    {
+                        title: "Best Man",
+                        text: "Barong with olive green pants"
+                    }
+                ]
             },
+
             {
                 role: "Flower Girls",
-                image: "images/attire/flower-girls.png"
+                image: "images/attire/flower-girls.png",
+                descriptions: [
+                    {
+                        title: "Flower Girls",
+                        text: "Sage green dresses"
+                    }
+                ]
             },
+
             {
                 role: "Bearers",
-                image: "images/attire/bearers.png"
+                image: "images/attire/bearers.png",
+                descriptions: [
+                    {
+                        title: "Bearers",
+                        text: "Short-sleeved barong with black pants"
+                    }
+                ]
             }
 
         ];
-
         let attireIndex = 0;
 
         const attireImage =
@@ -1106,27 +1390,66 @@
         const dots =
             document.querySelectorAll(".dot");
 
+        
+        const descriptionContainer =
+            document.getElementById("attireDescription");
+
+                
         function updateAttire() {
 
+            // Fade out the current image
             attireImage.style.opacity = 0;
 
+            // Get the currently selected slide
+            const currentSlide = attireSlides[attireIndex];
+
+            // Update the role and slide counter
+            attireRole.textContent = currentSlide.role;
+
+            attireCounter.textContent =
+                `${attireIndex + 1} of ${attireSlides.length}`;
+
+            // Update the active dot
+            dots.forEach(dot => {
+                dot.classList.remove("active");
+            });
+
+            if (dots[attireIndex]) {
+                dots[attireIndex].classList.add("active");
+            }
+
+            // UPDATE THE DESCRIPTIONS
+            descriptionContainer.innerHTML = "";
+
+            // Show two columns only if the slide has two descriptions
+            descriptionContainer.classList.toggle(
+                "has-two",
+                currentSlide.descriptions.length === 2
+            );
+
+            // Create each description for the current slide
+            currentSlide.descriptions.forEach(function (item) {
+
+                const descriptionItem = document.createElement("div");
+                descriptionItem.className = "attire-description-item";
+
+                const title = document.createElement("h5");
+                title.textContent = item.title;
+
+                const text = document.createElement("p");
+                text.textContent = item.text;
+
+                descriptionItem.appendChild(title);
+                descriptionItem.appendChild(text);
+
+                descriptionContainer.appendChild(descriptionItem);
+
+            });
+
+            // Change the image after the short fade-out
             setTimeout(() => {
 
-                attireImage.src =
-                    attireSlides[attireIndex].image;
-
-                attireRole.textContent =
-                    attireSlides[attireIndex].role;
-
-                attireCounter.textContent =
-                    `${attireIndex + 1} of ${attireSlides.length}`;
-
-                dots.forEach(dot =>
-                    dot.classList.remove("active")
-                );
-
-                dots[attireIndex]
-                    .classList.add("active");
+                attireImage.src = currentSlide.image;
 
                 attireImage.style.opacity = 1;
 
@@ -1134,6 +1457,7 @@
 
         }
 
+        updateAttire();
         document
             .querySelector(".attire-next")
             .addEventListener("click", () => {

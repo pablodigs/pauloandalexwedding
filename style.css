@@ -58,9 +58,6 @@ body {
     line-height: 1.7;
 }
 
-body.password-locked {
-    overflow: hidden;
-}
 
 /* =========================
    TYPOGRAPHY
@@ -1940,44 +1937,401 @@ footer h3 {
     }
 }
 
-#passwordGate {
+
+/* =========================================
+   ANIMATED WEDDING INVITATION GATE
+   ========================================= */
+
+#invitationGate {
     position: fixed;
     inset: 0;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     height: 100dvh;
-    background-color: #171512;
+    overflow: auto;
+    padding: 30px 18px;
+    box-sizing: border-box;
 
+    /* Keep the existing background image, softened with ivory */
+    background-color: #f7f3ed;
     background-image:
-        linear-gradient(rgba(255, 255, 255, 0.82),
-            rgba(255, 255, 255, 0.82)),
+        linear-gradient(
+            rgba(247, 243, 237, 0.48),
+            rgba(247, 243, 237, 0.48)
+        ),
         url("images/password-gate.jpg");
     background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
+    background-position: center;
     background-size: cover;
-    margin: 0;
 
+    opacity: 1;
+    visibility: visible;
+    transition:
+        opacity 0.8s ease,
+        visibility 0.8s ease;
+}
+
+#invitationGate.invitation-dismissed {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.invitation-scene {
+    width: 100%;
+    max-width: 560px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-
-    z-index: 99999;
-}
-
-.password-box {
     text-align: center;
-    width: 90%;
-    max-width: 400px;
 }
 
-#passwordError {
-    color: #b00020;
-    margin-top: 10px;
+.invitation-eyebrow {
+    margin: 0 0 12px;
+    color: #76694f;
+    font-family: "Inter", sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    line-height: 1.8;
 }
 
-#passwordInput {
-    margin-bottom: 15px;
+.invitation-heading {
+    margin: 0;
+    color: #34382e;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(32px, 5vw, 47px);
+    font-weight: 400;
+    line-height: 1.12;
+}
+
+.invitation-intro {
+    margin: 12px 0 0;
+    color: #6f6a5e;
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    line-height: 1.8;
+    letter-spacing: 0.02em;
+}
+
+/* Envelope stage */
+.envelope {
+    position: relative;
+    width: min(100%, 370px);
+    aspect-ratio: 1.48 / 1;
+    margin: 68px auto 0;
+    perspective: 1200px;
+    isolation: isolate;
+}
+
+/* Envelope back */
+.envelope-back {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border: 1px solid #d5c8b2;
+    border-radius: 3px;
+    background: #e7dcc8;
+    box-shadow: 0 22px 55px rgba(48, 39, 28, 0.18);
+}
+
+/* Invitation card */
+.envelope-letter {
+    position: absolute;
+    z-index: 2;
+    left: 7%;
+    right: 7%;
+    top: 5%;
+    height: 90%;
+    box-sizing: border-box;
+    padding: 17px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: #fcf9f2;
+    border: 1px solid #d8cbb6;
+    color: #37392f;
+
+    transform: translateY(0) scale(0.96);
+    transition:
+        transform 1s cubic-bezier(.2, .75, .25, 1),
+        top 1s cubic-bezier(.2, .75, .25, 1),
+        height 1s cubic-bezier(.2, .75, .25, 1);
+}
+
+.invitation-monogram {
+    display: block;
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    margin-bottom: 7px;
+}
+
+.letter-small {
+    margin: 0 0 5px;
+    font-family: "Inter", sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    color: #81765e;
+}
+
+.envelope-letter h2 {
+    margin: 0;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(25px, 5vw, 34px);
+    font-weight: 400;
+    line-height: 1.1;
+}
+
+.envelope-letter h2 span {
+    color: #87434a;
+    font-style: italic;
+}
+
+.letter-divider {
+    width: 72px;
+    margin: 9px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #927d5c;
+    font-size: 10px;
+}
+
+.letter-divider::before,
+.letter-divider::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: #c9b99c;
+}
+
+.letter-date {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.16em;
+}
+
+.letter-message {
+    max-width: 225px;
+    margin: 9px 0 6px;
+    color: #716a5d;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+.letter-signature {
+    color: #785d4e;
+    font-family: "Pinyon Script", cursive;
+    font-size: 19px;
+}
+
+/* Envelope front pocket */
+.envelope-pocket {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    overflow: hidden;
+    background: #e9decb;
+    clip-path: polygon(0 0, 50% 57%, 100% 0, 100% 100%, 0 100%);
+    border-radius: 2px;
+    pointer-events: none;
+}
+
+.envelope-pocket::before,
+.envelope-pocket::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #e2d4bd;
+}
+
+.envelope-pocket::before {
+    clip-path: polygon(0 0, 50% 57%, 0 100%);
+    background: #e5d8c3;
+}
+
+.envelope-pocket::after {
+    clip-path: polygon(100% 0, 50% 57%, 100% 100%);
+    background: #ded0b8;
+}
+
+/* Top triangular flap */
+.envelope-flap {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 5;
+    height: 70%;
+    background: #eee3d0;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top center;
+    transform: rotateX(0deg);
+    backface-visibility: visible;
+    transition:
+        transform 0.85s cubic-bezier(.3, .7, .2, 1),
+        z-index 0s linear 0.42s;
+}
+
+/* Wax seal button */
+.wax-seal {
+    position: absolute;
+    z-index: 7;
+    left: 50%;
+    top: 56%;
+    transform: translate(-50%, -50%);
+    width: 78px;
+    height: 78px;
+    padding: 0;
+    border: 2px solid #a36d70;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 32% 25%, #984e55 0%, #792e3b 48%, #5f202d 100%);
+    color: #f7eadc;
+    box-shadow:
+        0 4px 10px rgba(62, 29, 31, 0.25),
+        inset 0 0 0 3px rgba(255, 231, 211, 0.12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    cursor: pointer;
+    transition:
+        transform 0.25s ease,
+        opacity 0.35s ease,
+        box-shadow 0.25s ease;
+    font-family: "Inter", sans-serif;
+}
+
+.wax-seal:hover {
+    transform: translate(-50%, -50%) scale(1.06);
+    box-shadow:
+        0 7px 16px rgba(62, 29, 31, 0.28),
+        inset 0 0 0 3px rgba(255, 231, 211, 0.15);
+}
+
+.wax-seal:focus-visible {
+    outline: 3px solid #4b5a42;
+    outline-offset: 5px;
+}
+
+.wax-monogram {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 21px;
+    line-height: 1;
+}
+
+.wax-monogram span {
+    padding: 0 2px;
+    font-size: 13px;
+    font-style: italic;
+}
+
+.wax-label {
+    font-size: 7px;
+    letter-spacing: 0.18em;
+}
+
+/* Hint beneath the envelope */
+.invitation-hint {
+    margin: 24px 0 0;
+    color: #6e493f;
+    font-family: "Inter", sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    animation: invitationHintPulse 2.2s ease-in-out infinite;
+}
+
+.invitation-footer {
+    margin: 32px 0 0;
+    color: #807560;
+    font-family: "Inter", sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+}
+
+/* =========================================
+   OPENING ANIMATION
+   ========================================= */
+
+#invitationGate.is-opening .wax-seal {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.55);
+    pointer-events: none;
+}
+
+#invitationGate.is-opening .envelope-flap {
+    z-index: 1;
+    transform: rotateX(180deg);
+}
+
+#invitationGate.is-opening .envelope-letter {
+    z-index: 3;
+    top: -42%;
+    height: 135%;
+    transform: translateY(-5%) scale(1);
+    transition-delay: 0.25s;
+}
+
+#invitationGate.is-opening .invitation-hint {
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+@keyframes invitationHintPulse {
+    0%, 100% { opacity: 0.65; }
+    50% { opacity: 1; }
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+    #invitationGate {
+        padding: 22px 18px;
+    }
+
+    .invitation-heading {
+        font-size: clamp(30px, 8vw, 40px);
+    }
+
+    .invitation-intro {
+        max-width: 280px;
+        font-size: 11px;
+    }
+
+    .envelope {
+        width: min(100%, 340px);
+        margin-top: 62px;
+    }
+
+    .wax-seal {
+        width: 70px;
+        height: 70px;
+    }
+
+    .invitation-footer {
+        margin-top: 27px;
+        font-size: 7px;
+    }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    #invitationGate,
+    .envelope-flap,
+    .envelope-letter,
+    .wax-seal,
+    .invitation-hint {
+        animation: none !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
 .gallery img {
@@ -2123,25 +2477,64 @@ footer h3 {
 }
 
 .attire-content {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
 }
 
-.attire-content img {
-
-    width: 100%;
-    max-width: 500px;
-
-    height: auto;
-
+#attireImage {
     display: block;
+    max-width: 100%;
+    height: auto;
+}
 
-    margin: 0 auto;
+/* ATTIRE DESCRIPTION LAYOUT */
+.attire-description {
+    width: 100%;
+    max-width: 720px;
+    margin: 22px auto 8px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+}
 
-    border-radius: 8px;
+/* Two descriptions side by side */
+.attire-description.has-two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
 
-    transition:
-        opacity 0.3s ease,
-        transform 0.3s ease;
+/* Individual description */
+.attire-description-item {
+    min-width: 0;
+    padding: 18px 14px;
+    text-align: center;
+    border-top: 1px solid rgba(129, 122, 97, 0.35);
+}
+
+/* Subtle divider between the two columns */
+.attire-description.has-two .attire-description-item + .attire-description-item {
+    border-left: 1px solid rgba(129, 122, 97, 0.25);
+}
+
+.attire-description-item h5 {
+    margin: 0 0 8px;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 21px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    line-height: 1.3;
+    color: #30382c;
+}
+
+.attire-description-item p {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.8;
+    color: #716d60;
 }
 
 .attire-prev,
@@ -2215,6 +2608,23 @@ footer h3 {
 
     .attire-content img {
         max-width: 100%;
+    }
+    .attire-description {
+        margin-top: 14px;
+        gap: 8px;
+    }
+
+    .attire-description-item {
+        padding: 15px 8px;
+    }
+
+    .attire-description-item h5 {
+        font-size: 15px;
+    }
+
+    .attire-description-item p {
+        font-size: 10px;
+        line-height: 1.7;
     }
 
 }
@@ -3540,32 +3950,6 @@ footer {
     text-transform: uppercase;
 }
 
-/* Password gate: opaque until the background is ready, no page flash */
-#passwordGate {
-    z-index: 2000;
-    background-color: #f7f3ed;
-    background-image: linear-gradient(rgba(247, 243, 237, .12), rgba(247, 243, 237, .12)), url("images/password-gate.jpg");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-.password-box {
-    background: rgba(255, 253, 249, .93);
-    border: 1px solid rgba(255, 255, 255, .75);
-    border-radius: 2px;
-    box-shadow: 0 24px 80px rgba(35, 29, 23, .18);
-    backdrop-filter: blur(8px);
-}
-
-.password-box h2 {
-    font-size: 2.5rem;
-}
-
-.password-box .primary-btn {
-    min-height: 48px;
-}
-
 /* Anchor offsets, motion and responsive navigation */
 #attendance,
 #aisle,
@@ -4684,4 +5068,54 @@ footer {
     .desktop-break {
         display: none;
     }
+}
+
+/* Wedding Website Menu Button */
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+
+  min-height: 180px;
+  padding: 24px 16px;
+
+  background-color: #eee9df;
+  border: 1px solid #d9d0c4;
+
+  color: #453b31;
+  text-decoration: none;
+  text-align: center;
+
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 29px;
+  font-weight: 400;
+  line-height: 1.15;
+
+  transition: background-color 0.3s ease;
+}
+
+.menu-item:hover {
+  background-color: #e5ded2;
+}
+
+.menu-icon {
+  color: #9a8873;
+  flex-shrink: 0;
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+  .menu-item {
+    min-height: 150px;
+    padding: 20px 10px;
+    gap: 16px;
+    font-size: 24px;
+  }
+
+  .menu-icon {
+    width: 20px;
+    height: 20px;
+  }
 }
